@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: "BMV Hybrid Research Portfolio"
+message: "If you use this work, please cite it."
+type: software
+authors:
+  - given-names: "Luis Jesus"
+    family-names: "Aleman Martinez"
+    affiliation: "Tecnologico de Monterrey"
+    orcid: ""
+keywords:
+  - quantitative finance
+  - machine learning
+  - time series
+  - trading systems
+year: 2025
+license: MIT
