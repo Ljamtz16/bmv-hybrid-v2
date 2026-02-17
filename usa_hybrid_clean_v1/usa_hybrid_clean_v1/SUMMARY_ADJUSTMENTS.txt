@@ -1,0 +1,81 @@
+================================================================================
+✅ ADJUSTMENTS SUMMARY - USA_HYBRID_CLEAN_V1
+================================================================================
+Date: 2026-01-15 19:00 CDMX
+Status: COMPLETE AND VALIDATED
+
+ADJUSTMENT A: Warning "side" → Actionable + Traceable
+─────────────────────────────────────────────────────
+Problem:  [WARN] Columnas opcionales faltantes: ['side']
+Solution: Auto-impute BUY if prob_win > 0.5, else SELL
+Result:   [INFO] Imputando columna 'side' basada en prob_win > 0.5
+Audit:    forecast_issues.side_imputed = true
+          forecast_issues.side_imputation_rule = "BUY if prob_win > 0.5 else SELL"
+Impact:   Actionable warning + Full traceability in audit log
+
+ADJUSTMENT B: Exposure Guardrail → Prevent Capital Overshoot
+────────────────────────────────────────────────────────────
+Problem:  No detection if exposure > 100% (insufficient buying power risk)
+Solution: Check exposure % vs capital, warn if > 98%, error if > 100%
+Result:   [WARN] Exposure alta (guardrail): 99.17% > 98%
+          Disponible: $825.64 (0.83%)
+          Riesgo: cambios de redondeo pueden exceder 100%
+Criteria: 🔴 ERROR if > 100%  |  🟡 WARN if > 98%  |  🟢 OK if ≤ 98%
+Impact:   Soft guardrail prevents surprises, preserves operability
+
+FILES MODIFIED
+──────────────
+1. scripts/run_trade_plan.py
+   - validate_forecast_schema() → return missing_optional (line 136)
+   - prepare_forecast_csv() → impute side if missing (line 164)
+   - prepare_forecast_csv() → return (df, validation) (line 175)
+   - run() → save exposure_total to audit (line 352)
+   - run() → use validation in audit log (line 309)
+
+2. pre_e2e_final_check.py
+   - Add Check 5: Exposure guardrail (line 161-194)
+   - Validate qty/entry for NaN/negative (line 166-177)
+   - WARN if exposure_pct > 98% (line 189-194)
+   - ERROR if exposure_pct > 100% (line 187-188)
+
+VALIDATION RUN (2026-01-15 19:03)
+────────────────────────────────
+Command: python pre_e2e_final_check.py
+Result:  STATUS: LISTO PARA E2E MANANA 14:30 CDMX
+
+Output examples:
+  [WARN] Columnas opcionales FALTANTES: ['side']
+  [INFO] Imputando columna 'side' basada en prob_win > 0.5
+  [WARN] Exposure alta (guardrail): 99.17% > 98%
+         Disponible: $825.64 (0.83%)
+         Riesgo: cambios de redondeo pueden exceder 100%
+
+Checklist: 4/4 PASS ✅
+
+AUDIT LOG EXAMPLE
+─────────────────
+{
+  "exposure_total": 99174.3600654602,
+  "capital": 100000.0,
+  "forecast_issues": {
+    "missing_optional_cols": ["side"],
+    "side_imputed": true,
+    "side_imputation_rule": "BUY if prob_win > 0.5 else SELL"
+  },
+  "versions": {
+    "scikit-learn": "1.7.2",
+    ...
+  }
+}
+
+TOMORROW (2026-01-16 14:25 CDMX)
+─────────────────────────────────
+Command: python pre_e2e_final_check.py
+Expected: 4/4 PASS (warnings acceptable if consistent)
+
+If WARN exposure > 98%:  Normal (system is aggressive), proceed
+If ERROR exposure > 100%: Investigate floating point precision
+
+Then: python E2E_TEST_PROCEDURE.py (14:30)
+
+================================================================================

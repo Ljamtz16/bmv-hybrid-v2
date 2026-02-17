@@ -1,0 +1,6 @@
+﻿{
+    "min_prob":  0.52,
+    "min_abs_yhat":  0.04,
+    "per_trade_cash":  400,
+    "month":  "2025-01"
+}

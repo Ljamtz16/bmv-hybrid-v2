@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-01-15T20:04:40.848831",
+  "status": "success",
+  "forecast_original_fmt": "parquet",
+  "forecast_rows": 8,
+  "prices_rows": 27324,
+  "output_file": "val/trade_plan_60s_test.csv",
+  "asof_date": "2026-01-14",
+  "capital": 100000.0,
+  "max_open": 15,
+  "tp_pct": 0.1,
+  "sl_pct": 0.02,
+  "forecast_issues": {
+    "missing_optional_cols": [
+      "side"
+    ],
+    "side_imputed": true,
+    "side_imputation_rule": "BUY if prob_win > 0.5 else SELL"
+  },
+  "versions": {
+    "scikit-learn": "1.7.2",
+    "joblib": "1.5.3",
+    "numpy": "2.4.1",
+    "pandas": "2.2.3",
+    "xgboost": "3.1.1",
+    "catboost": "1.2.8"
+  },
+  "etth_method": "atr14_proxy",
+  "etth_window": 14,
+  "etth_clamp_min": 0.5,
+  "etth_clamp_max": 10.0,
+  "etth_n": 5,
+  "etth_nan_pct": 0.0,
+  "etth_unique": 5,
+  "etth_mean": 4.795976790482608,
+  "etth_min": 2.8148550723643453,
+  "etth_max": 6.402386425135662,
+  "etth_degraded_count": 0,
+  "atr14_pct_mean": 0.01960909065848286,
+  "atr14_pct_nan_pct": 0.0,
+  "output_rows": 5,
+  "output_cols": 22,
+  "prob_win_mean": 0.9538659519041118,
+  "exposure_total": 99541.53118896484,
+  "etth_days_mean": 4.795976790482608,
+  "etth_days_min": 2.8148550723643453,
+  "etth_days_max": 6.402386425135662
+}

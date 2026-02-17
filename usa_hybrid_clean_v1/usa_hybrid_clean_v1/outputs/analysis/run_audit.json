@@ -1,0 +1,99 @@
+{
+  "timestamp": "2026-01-14 12:35:37.156033",
+  "target_date": "2025-11-14",
+  "dataset_metadata": {
+    "source": "all_signals_with_confidence.csv",
+    "full_path": "outputs\\analysis\\all_signals_with_confidence.csv",
+    "file_size_mb": 4.76,
+    "hash_md5": "d9e119ed",
+    "total_rows": 26634,
+    "date_min": "2020-01-02",
+    "date_max": "2025-11-19",
+    "unique_dates": 1480,
+    "unique_tickers": 18,
+    "row_counts": {
+      "rows_loaded": 26637,
+      "rows_after_prepare": 26637,
+      "rows_after_dedup": 26637,
+      "rows_after_any_filter": 26634
+    },
+    "dropped_rows_reason_counts": {
+      "invalid_date": 0,
+      "missing_core_fields": 0,
+      "price_real_nan_after_shift": 3
+    }
+  },
+  "fallback_flags": {
+    "macro_risk_fallback_count": 0,
+    "macro_risk_distribution_by_row": {
+      "MEDIUM": 26544,
+      "HIGH": 90
+    },
+    "macro_risk_by_day": {
+      "total_days": 1480,
+      "distribution": {
+        "MEDIUM": 1475,
+        "HIGH": 5
+      },
+      "high_days_pct": 0.34
+    },
+    "high_days_count_last_60": 0
+  },
+  "gap_overlay": {
+    "available_rows": 0,
+    "unavailable_rows": 26634,
+    "unavailable_pct": 100.0,
+    "policy": {
+      "requested": true,
+      "active": true,
+      "mode": "DEV",
+      "strict_mode": false,
+      "ohlcv_ready": false,
+      "hardfail_threshold_pct": 5.0
+    }
+  },
+  "breakdown": {
+    "global": 26634,
+    "conf_only": 10383,
+    "percentages": {
+      "conf_only": 38.98400540662311,
+      "conf_risk": 38.9089134189382,
+      "operable": 14.56784561087332
+    }
+  },
+  "validation": {
+    "global_operables_count": 3880,
+    "daily_operables_count": 2,
+    "expected_global_operables_count": 3881,
+    "expected_daily_operables_count": null,
+    "delta_global": -1,
+    "delta_global_pct": 0.03,
+    "status": "OK",
+    "separation_report": {
+      "acc_medium": 0.4879,
+      "acc_high": 0.5444,
+      "separation": 0.0565,
+      "high_days": 5,
+      "min_high_days_required": 10,
+      "sample_sufficient": false
+    }
+  },
+  "kill_switch": {
+    "triggered": false,
+    "reason": "OK: last 5 operable days not all below 50%"
+  },
+  "output": {
+    "signals_to_trade": "signals_to_trade_2025-11-14.csv",
+    "kill_switch_status": "kill_switch_status.txt",
+    "plot": "15_daily_overview_2025-11-14.png"
+  },
+  "config_snapshot": {
+    "MODE": "DEV",
+    "STRICT_MODE": false,
+    "GAP_OVERLAY_ENABLED_REQUESTED": true,
+    "GAP_OVERLAY_ACTIVE": true,
+    "OHLCV_READY": false,
+    "GAP_UNAVAILABLE_PCT_HARDFAIL": 5.0,
+    "MIN_HIGH_DAYS_FOR_SEPARATION": 10
+  }
+}

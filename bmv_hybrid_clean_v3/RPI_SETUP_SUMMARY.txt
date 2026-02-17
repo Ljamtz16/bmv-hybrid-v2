@@ -1,0 +1,137 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║         🚀 BMV HYBRID EN RASPBERRY PI 4B+ - SETUP COMPLETADO 🚀           ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+📁 ARCHIVOS CREADOS EN: bmv_hybrid_clean_v3/
+
+════════════════════════════════════════════════════════════════════════════
+1. INSTALACIÓN AUTOMÁTICA
+════════════════════════════════════════════════════════════════════════════
+
+📦 requirements-lite.txt
+   └─ Dependencias optimizadas para Raspberry Pi
+
+🔧 setup_rpi.sh
+   ├─ Instala Python 3.10+
+   ├─ Crea virtual environment
+   ├─ Instala todas las librerías
+   ├─ Crea estructura de directorios
+   └─ Configura servicios systemd automáticos
+
+🔄 sync_to_rpi.sh
+   └─ Sincroniza archivos esenciales: desktop → RPi (en 1 comando)
+
+✔️ validate_rpi_setup.py
+   └─ 10 tests para validar que todo está bien configurado
+
+════════════════════════════════════════════════════════════════════════════
+2. MONITOREO & CONTROL REMOTO
+════════════════════════════════════════════════════════════════════════════
+
+🌐 dashboard_app.py (Flask)
+   ├─ Dashboard web ligero
+   ├─ Posiciones en vivo
+   ├─ Gráficos de equity
+   ├─ Últimos trades
+   └─ Acceso: http://192.168.1.100:5000
+
+🎮 remote_control_rpi.sh
+   ├─ Ver logs remotamente
+   ├─ Ejecutar tareas manualmente
+   ├─ Backup de reportes
+   ├─ Ver estado de servicios
+   └─ Reiniciar automáticamente
+
+════════════════════════════════════════════════════════════════════════════
+3. DOCUMENTACIÓN
+════════════════════════════════════════════════════════════════════════════
+
+📖 QUICK_START_RPI.md
+   └─ Guía rápida en 3 pasos (recomendado empezar aquí)
+
+📚 INSTALL_RPI.md
+   └─ Documentación completa y detallada
+
+🏗️ ARCHITECTURE.md
+   ├─ Flujo completo de datos
+   ├─ Timeline de instalación
+   ├─ Qué se reportea automáticamente
+   └─ Troubleshooting completo
+
+════════════════════════════════════════════════════════════════════════════
+⚡ FLUJO RÁPIDO (3 pasos)
+════════════════════════════════════════════════════════════════════════════
+
+PASO 1: Desktop (Windows)
+  cd bmv_hybrid_clean_v3
+  bash sync_to_rpi.sh pi 192.168.1.100
+
+PASO 2: En la RPi
+  ssh pi@192.168.1.100
+  cd ~/bmv_hybrid_clean_v3
+  bash setup_rpi.sh
+
+PASO 3: Validar
+  python validate_rpi_setup.py
+
+🎉 ¡LISTO! Ya está corriendo automáticamente.
+
+════════════════════════════════════════════════════════════════════════════
+⏰ AUTOMATIZACIÓN
+════════════════════════════════════════════════════════════════════════════
+
+06:00 - Diariamente
+  ├─ Descarga datos con yfinance
+  ├─ Calcula indicadores (features)
+  ├─ Genera señales BUY/SELL
+  └─ ⭐ EJECUTA PAPER TRADING DEL DÍA
+
+09:30-16:30 - Lunes a Viernes
+  ├─ Monitor en vivo (cada 5 min)
+  ├─ Actualiza posiciones activas
+  ├─ Calcula TP/SL en tiempo real
+  └─ [Opcional] Notificaciones Telegram
+
+════════════════════════════════════════════════════════════════════════════
+📊 RESULTADOS GENERADOS
+════════════════════════════════════════════════════════════════════════════
+
+reports/paper_trading/2025-01-24/
+  ├─ trades.csv          (entry, exit, pnl, status)
+  ├─ signals.csv         (señales del día)
+  └─ equity.csv          (capital por hora)
+
+bitacora_intraday.csv   (posiciones actuales intradía)
+equity_curve.csv         (histórico de capital)
+
+════════════════════════════════════════════════════════════════════════════
+🌐 ACCESO REMOTO A REPORTES
+════════════════════════════════════════════════════════════════════════════
+
+1. Web Dashboard
+   http://192.168.1.100:5000
+   → Gráficos, posiciones, trades en tiempo real
+
+2. Terminal SSH
+   ssh pi@192.168.1.100
+   journalctl -u bmv-daily-tasks -f
+
+3. Descargar archivos
+   scp -r pi@192.168.1.100:~/bmv/reports ./backup
+
+4. Control remoto
+   bash remote_control_rpi.sh pi 192.168.1.100 logs-daily
+
+════════════════════════════════════════════════════════════════════════════
+📞 DOCUMENTACIÓN RECOMENDADA
+════════════════════════════════════════════════════════════════════════════
+
+1. Empezar: QUICK_START_RPI.md (3 pasos)
+2. Instalación: INSTALL_RPI.md (manual completo)
+3. Entender: ARCHITECTURE.md (flujo completo)
+
+════════════════════════════════════════════════════════════════════════════
+
+🚀 Tu Raspberry Pi está lista para ejecutar paper trading automáticamente!

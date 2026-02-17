@@ -1,0 +1,13 @@
+# Python venv
+.venv/
+
+# Secrets and env files
+.env
+
+# Generated trading artifacts
+data/trading/predictions_log.csv
+reports/trading/*.html
+
+# OS noise
+Thumbs.db
+*.log

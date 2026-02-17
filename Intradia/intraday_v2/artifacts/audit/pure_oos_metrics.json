@@ -1,0 +1,25 @@
+{
+  "period": {
+    "train_start": "2020-07-29 00:00:00",
+    "train_end": "2025-06-30 00:00:00",
+    "test_start": "2025-07-01 00:00:00",
+    "test_end": "2026-02-13 00:00:00",
+    "train_samples": 4934,
+    "test_samples": 881
+  },
+  "metrics": {
+    "auc_raw": 0.9880048679390786,
+    "auc_calibrated": 0.9873481781376519,
+    "brier_raw": 0.03657961358526485,
+    "brier_calibrated": 0.034106527903024514,
+    "ap_calibrated": 0.9684176413330052,
+    "ece_calibrated": 0.01883819326619796
+  },
+  "backtest": {
+    "trades": 39,
+    "wr_percent": 84.61538461538461,
+    "pf": 1.0658819959335692,
+    "pnl": 266.9477857142859
+  },
+  "verdict": "GREEN"
+}

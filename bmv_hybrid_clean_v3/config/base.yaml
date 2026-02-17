@@ -1,0 +1,49 @@
+tickers:
+- AMXB.MX
+- GFNORTEO.MX
+- BIMBOA.MX
+- GMEXICOB.MX
+- WALMEX.MX
+- CEMEXCPO.MX
+- ALSEA.MX
+- OMAB.MX
+- KIMBERA.MX
+- PE&OLES.MX
+- FEMSAUBD.MX
+- TLEVISACPO.MX
+- GRUMAB.MX
+- ARA.MX
+start: '2019-01-01'
+end: '2025-02-01'
+session: 07:00-14:00
+data_dir: data
+reports_dir: reports
+exec:
+  tp_atr_mult: 1.7
+  sl_atr_mult: 0.8
+  commission_pct: 0.001
+  slippage_pct: 0.0002
+  max_holding_days: 3
+  trail_atr_mult: 0.7
+  trail_activation_atr: 0.6
+  break_even_atr: 0.8
+calibration:
+  start: '2024-01-01'
+  end: '2025-01-01'
+  tau_grid:
+  - 0.45
+  - 0.5
+  - 0.55
+  - 0.6
+  - 0.65
+  fusion_step: 0.1
+  tau_star:
+    BUY: 0.65
+    SELL: 0.45
+evaluation:
+  start: '2024-11-01'
+  end: '2024-12-01'
+models:
+  rf_path: models/rf.pkl
+  svm_path: models/svm.pkl
+  lstm_path: models/lstm.keras

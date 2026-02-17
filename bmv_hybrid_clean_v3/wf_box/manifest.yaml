@@ -1,0 +1,24 @@
+universe:
+  - ALSEA.MX
+  - AMXB.MX
+  - ARA.MX
+  - ASURB.MX
+  - BIMBOA.MX
+  - CEMEXCPO.MX
+  - FEMSAUBD.MX
+  - GFNORTEO.MX
+  - GMEXICOB.MX
+  - GRUMAB.MX
+  - KIMBERA.MX
+  - OMAB.MX
+  - PE&OLES.MX
+  - TLEVISACPO.MX
+  - WALMEX.MX
+  
+date_range:
+  start: "2019-01-01"
+  end:   "2025-04-30"
+
+target:
+  horizon_days: 4         # ← para alinear con tu simulación (4 días)
+  type: log_return_sum

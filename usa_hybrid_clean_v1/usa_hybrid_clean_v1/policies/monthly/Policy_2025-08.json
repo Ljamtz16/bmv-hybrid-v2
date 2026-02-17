@@ -1,0 +1,9 @@
+﻿{
+    "horizon_days_high_atr":  2,
+    "month":  "2025-08",
+    "gate_threshold":  0.55,
+    "min_prob":  0.52,
+    "min_abs_yhat":  0.04,
+    "max_open":  5,
+    "per_trade_cash":  200
+}

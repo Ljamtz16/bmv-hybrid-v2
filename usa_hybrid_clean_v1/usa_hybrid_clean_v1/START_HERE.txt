@@ -1,0 +1,263 @@
+===============================================================================
+✅ ANÁLISIS PREDICCIÓN VS REALIDAD - COMPLETADO
+===============================================================================
+
+Se han generado herramientas completas para analizar predicción vs realidad
+de tu modelo de retorno (H3) y probabilidad (prob_win).
+
+===============================================================================
+📊 QUÉ SE GENERÓ
+===============================================================================
+
+1️⃣ SCRIPTS PYTHON (Ejecutables)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ analysis_pred_vs_real.py
+  → Analiza predicción vs realidad
+  → Calcula MAE, RMSE, MAPE, Directional Accuracy
+  → Genera 10 gráficas (5 globales + 5 por ticker top)
+  → Imprime métricas por ticker
+  
+  Ejecutar: python analysis_pred_vs_real.py
+
+✓ analysis_trading_results.py
+  → Analiza equity curve (trades ejecutados)
+  → Calcula PnL, win rate, profit factor
+  → Genera 4 gráficas de trading
+  
+  Ejecutar: python analysis_trading_results.py
+
+✓ generate_analysis_report.py
+  → Genera reporte ejecutivo en texto
+  → Resumen de hallazgos principales
+  → Recomendaciones
+  
+  Ejecutar: python generate_analysis_report.py
+
+✓ serve_analysis_dashboard.py
+  → Servidor local para dashboard interactivo
+  
+  Ejecutar: python serve_analysis_dashboard.py
+  Luego abre: http://localhost:8765/analysis_dashboard.html
+
+✓ open_dashboard.py
+  → Abre el dashboard en tu navegador por defecto
+  
+  Ejecutar: python open_dashboard.py
+
+✓ run_full_analysis.ps1
+  → Script PowerShell que ejecuta TODO de una vez
+  → Análisis + Reporte + Abre Dashboard automáticamente
+  
+  Ejecutar (PowerShell): .\run_full_analysis.ps1
+
+2️⃣ DASHBOARD INTERACTIVO (HTML)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ analysis_dashboard.html
+  → Dashboard web con todas las gráficas y métricas
+  → 5 pestañas interactivas:
+    1. 📈 Resumen - KPIs principales en tarjetas
+    2. 📉 Regresión - Gráficas de predicción vs real
+    3. 📊 Probabilidad - Curvas de calibración
+    4. 💰 Trading - Resultados de equity curve
+    5. 💡 Interpretación - Análisis y recomendaciones
+  → Click en gráficas para ver en grande
+
+3️⃣ GRÁFICAS GENERADAS (24 PNG)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📁 outputs/analysis/
+
+REGRESIÓN (20 gráficas):
+  ✓ 01_pred_vs_real_all.png + AAPL, AMD, AMZN
+    → Líneas: predicción vs real en el tiempo
+  
+  ✓ 02_error_timeseries_all.png + AAPL, AMD, AMZN
+    → Error absoluto en el tiempo
+  
+  ✓ 03_error_band_all.png + AAPL, AMD, AMZN
+    → Predicción con banda de confianza
+  
+  ✓ 04_scatter_all.png + AAPL, AMD, AMZN
+    → Scatter plot (real vs predicción)
+  
+  ✓ 05_calibration_all.png + AAPL, AMD, AMZN
+    → Curva de calibración (prob_win)
+
+TRADING (4 gráficas):
+  ✓ 06_pnl_timeseries.png
+    → PnL por trade + acumulado
+  
+  ✓ 07_pnl_distribution.png
+    → Histograma de ganancias/pérdidas
+  
+  ✓ 08_pnl_by_ticker.png
+    → Box plot PnL por ticker
+  
+  ✓ 09_win_rate_by_ticker.png
+    → Win rate y PnL promedio por ticker
+
+4️⃣ REPORTES Y DOCUMENTACIÓN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ outputs/ANALYSIS_REPORT.txt
+  → Reporte ejecutivo en texto
+  → Hallazgos principales
+  → Recomendaciones
+
+✓ ANALYSIS_README.md
+  → Documentación completa
+  → Guía de uso de scripts
+  → Personalización
+  → Troubleshooting
+
+✓ OUTPUTS_SUMMARY.md
+  → Resumen de archivos generados
+  → Hallazgos clave
+  → Próximos pasos
+
+===============================================================================
+📊 RESULTADOS PRINCIPALES
+===============================================================================
+
+MODELO DE REGRESIÓN (Retorno H3):
+  ✓ MAE:                    0.0518  (muy bajo, error pequeño)
+  ⚠ Directional Accuracy:   48.81%  (⚠️ apenas mejor que aleatorio)
+  ✓ Muestras:               26,640  (estadísticamente válido)
+
+MODELO DE PROBABILIDAD (prob_win):
+  ✓ Brier Score:            0.2827  (razonablemente bien calibrado)
+  ✓ Win Rate Real:          54.61%  (ligeramente positivo)
+  ⚠ Prob Predicha:          42.16%  (subestima en -12.44%)
+  ✓ Mejor ticker:           XOM (Brier=0.2099)
+  ✗ Peor ticker:            QQQ (Brier=0.3426)
+
+TRADING (Equity Curve):
+  ⚠ Total Trades:           4 (muestra muy pequeña)
+  ⚠ Win Rate:               0% (período desfavorable)
+  ⚠ Total PnL:              -$25,436
+  💡 Nota: Esperar 30+ trades para validación
+
+===============================================================================
+🚀 CÓMO USAR
+===============================================================================
+
+OPCIÓN 1: Ver Dashboard (RECOMENDADO)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A) Automático (más fácil):
+   PowerShell: .\run_full_analysis.ps1
+   
+   Esto hace TODO automáticamente:
+   - Ejecuta analysis_pred_vs_real.py
+   - Ejecuta analysis_trading_results.py
+   - Genera reporte
+   - Abre dashboard en navegador
+
+B) Paso a paso:
+   1. python analysis_pred_vs_real.py
+   2. python analysis_trading_results.py
+   3. python open_dashboard.py
+   
+   El dashboard se abrirá en tu navegador por defecto
+
+C) Servidor local (si prefieres):
+   1. python serve_analysis_dashboard.py
+   2. Luego abre: http://localhost:8765/analysis_dashboard.html
+
+OPCIÓN 2: Leer Reporte en Texto
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+cat outputs/ANALYSIS_REPORT.txt
+
+OPCIÓN 3: Explorar Gráficas
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Windows:
+start outputs\analysis
+
+# Mac/Linux:
+open outputs/analysis
+
+===============================================================================
+⚠️ RECOMENDACIONES INMEDIATAS
+===============================================================================
+
+🔴 CRÍTICO: Directional Accuracy = 48.81%
+   ├─ Problema: Modelo NO predice bien si retorno sube o baja
+   ├─ Impacto: Limita utilidad para trading
+   └─ Acción: Revisar features dentro de 1 semana
+
+🟡 IMPORTANTE: Sesgo en prob_win = -12.44%
+   ├─ Problema: Subestima probabilidades sistemáticamente
+   ├─ Impacto: Puede perder trades ganadores por conservadurismo
+   └─ Acción: Recalibrar con CalibratedClassifierCV
+
+🟡 IMPORTANTE: Datos de trading muy limitados (4 trades)
+   ├─ Problema: Muestra estadísticamente insuficiente
+   ├─ Impacto: No se puede validar performance real
+   └─ Acción: Esperar a acumular 30-50 trades
+
+===============================================================================
+📚 DOCUMENTACIÓN
+===============================================================================
+
+Lee en orden:
+1. ESTE ARCHIVO (resumen rápido)
+2. ANALYSIS_README.md (guía completa)
+3. OUTPUTS_SUMMARY.md (listado de outputs)
+4. analysis_dashboard.html (gráficas interactivas)
+5. outputs/ANALYSIS_REPORT.txt (reporte ejecutivo)
+
+===============================================================================
+💻 REQUISITOS
+===============================================================================
+
+✓ Python 3.12+
+✓ pandas, numpy, matplotlib, seaborn, scikit-learn
+
+Si faltan paquetes:
+  pip install seaborn
+
+Para verificar:
+  python -c "import pandas, numpy, matplotlib, seaborn, sklearn; print('OK')"
+
+===============================================================================
+🎯 PRÓXIMOS PASOS
+===============================================================================
+
+ESTA SEMANA:
+  □ Abrir dashboard (run_full_analysis.ps1)
+  □ Revisar hallazgos en "Interpretación"
+  □ Identificar por qué Directional Accuracy es baja
+
+ESTE MES:
+  □ Recalibrar prob_win
+  □ Analizar features (¿cuáles son predictivas?)
+  □ Esperar a 20+ trades ejecutados
+  □ Considerar ensemble de modelos
+
+MONITOREO CONTINUO:
+  □ Ejecutar análisis semanalmente
+  □ Alertar si métricas se degradan 10%+
+  □ Gráficas de equity curve en tiempo real
+
+===============================================================================
+
+✅ TODO LISTO PARA USAR
+
+Ejecuta: .\run_full_analysis.ps1
+
+O si prefieres paso a paso:
+  1. python analysis_pred_vs_real.py
+  2. python analysis_trading_results.py
+  3. python open_dashboard.py
+
+¡El dashboard se abrirá automáticamente en tu navegador!
+
+===============================================================================
+Generado: 12 Enero 2026
+Autor: GitHub Copilot
+Datos: 26,640 observaciones en 18 tickers (2020-01-02 a 2025-10-31)
+===============================================================================

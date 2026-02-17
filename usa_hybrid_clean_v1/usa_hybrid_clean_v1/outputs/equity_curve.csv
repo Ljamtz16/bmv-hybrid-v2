@@ -1,0 +1,5 @@
+Ticker,Fecha Cierre,PnL USD,PnL %,PnL_Acumulado,Exit Reason
+XOM,2025-11-14 00:00,-9369.0,-78.87,-9369.0,SL_natural
+CVX,2025-11-21 00:00,-23.34,-0.15,-9392.34,
+WMT,2025-11-24 00:00,-8022.0,-76.17,-17414.34,SL_natural
+WMT,2025-11-24 00:00,-8022.0,-76.17,-25436.34,SL_natural

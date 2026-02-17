@@ -1,0 +1,43 @@
+{
+  "mode": "H3",
+  "description": "Política H3 relajada para predicción semana Nov 4-7 (exploratoria)",
+  "version": "1.0-exploratory",
+  "created_date": "2025-11-04",
+  
+  "risk": {
+    "tp_pct": 0.065,
+    "sl_pct": 0.008,
+    "expiry_days": 4,
+    "cost_pct": 0.005
+  },
+  
+  "filters": {
+    "min_p_tp_sl": 0.50,
+    "min_ev_pct": 0.020,
+    "min_prob_win": 0.50,
+    "max_etth_days": 5.0,
+    "atr_min": 0.005,
+    "atr_max": 0.060
+  },
+  
+  "sizing": {
+    "max_open": 3,
+    "per_trade_cash": 400,
+    "max_total_capital": 1200,
+    "sector_max_dupes": 2,
+    "ticker_max_dupes": 1
+  },
+  
+  "execution": {
+    "first_touch": true,
+    "horizon_days": 3,
+    "force_close_at_expiry": true
+  },
+  
+  "notes": [
+    "POLÍTICA EXPLORATORIA - NO VALIDADA",
+    "Solo para predicción semana Nov 4-7",
+    "Filtros relajados: prob_win≥50%, EV≥2%, ATR hasta 6%",
+    "NO usar para trading real sin validación"
+  ]
+}

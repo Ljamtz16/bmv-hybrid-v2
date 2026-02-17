@@ -1,0 +1,186 @@
+===============================================================================
+CRITERIOS DE ACEPTACIÓN H3 + PLAN OPERATIVO
+===============================================================================
+Fecha: 4 Nov 2025
+Versión: 1.0
+Estado: IMPLEMENTADO
+
+═══════════════════════════════════════════════════════════════════════════════
+1. CRITERIOS DE ACEPTACIÓN MÍNIMA H3
+═══════════════════════════════════════════════════════════════════════════════
+
+┌─────────────────────┬──────────────┬─────────────┬──────────────┐
+│ Criterio            │ Umbral       │ Oct 2025    │ Estado       │
+├─────────────────────┼──────────────┼─────────────┼──────────────┤
+│ p_win               │ ≥ 62%        │ 83.3%       │ ✅ APROBADO  │
+│ EV_net/trade        │ ≥ 3.5%       │ 5.33%       │ ✅ APROBADO  │
+│ ETTH_mediana        │ ≤ 4 días     │ 3.0 días    │ ✅ APROBADO  │
+│ MDD mensual         │ < 6%         │ 0.0%        │ ✅ APROBADO  │
+│ Hit-first correcto  │ 100%         │ VERIFICAR*  │ ⚠️  PENDIENTE│
+└─────────────────────┴──────────────┴─────────────┴──────────────┘
+
+*Requiere auditoría manual de 3 trades aleatorios por ticker
+
+Wilson 95% CI: [43.6%, 97.0%]
+⚠️  Nota: Muestra pequeña (n=6). Requerido n≥50 para confianza estadística.
+
+═══════════════════════════════════════════════════════════════════════════════
+2. POLÍTICA H3 OPERATIVA
+═══════════════════════════════════════════════════════════════════════════════
+
+FILTROS DE ENTRADA:
+  ✓ P(TP<SL) ≥ 0.70
+  ✓ EV_net ≥ 3.5% (post-costos 50 bps)
+  ✓ ETTH ≤ 4 días
+  ✓ ATR% en rango normal (0.5% - 3.5%)
+  ✓ prob_win ≥ 62% (calibrado)
+
+PARÁMETROS TP/SL:
+  • TP: 6.0 - 7.0% (primer toque)
+  • SL: 0.5 - 1.0% (primer toque)
+  • R:R objetivo: ~7:1
+
+REGLAS DE SIZING:
+  • Capital/trade: $300 - $500
+  • max_open_H3: 2-3 posiciones simultáneas
+  • Capital H3 total: $1,000 (separado de intraday)
+
+EXPIRY:
+  • Horizonte: H3 (3-4 días)
+  • Acción si no toca: HORIZON_END → cerrar y rotar
+  • No hold > 4 días bajo ninguna circunstancia
+
+DIVERSIFICACIÓN:
+  • Max 2 posiciones mismo sector simultáneas
+  • Max 1 posición mismo ticker
+  • Rotación diaria: evaluar nuevas señales cada EOD
+
+═══════════════════════════════════════════════════════════════════════════════
+3. VALIDACIÓN WALK-FORWARD (NOV/DIC 2025)
+═══════════════════════════════════════════════════════════════════════════════
+
+PROTOCOLO:
+1. Parámetros H3 CONGELADOS (no ajustar entre meses)
+2. Ejecutar pipeline diario:
+   - infer_and_gate.py --month YYYY-MM
+   - simulate_trading.py (backtest)
+   - make_trade_plan.py
+3. Guardar KPIs mensuales:
+   ✓ trades_detailed.csv
+   ✓ kpi_all.json
+   ✓ validation_report.json
+
+MÉTRICAS A MONITOREAR:
+  • p_win (con Wilson 95% CI)
+  • EV_net (post-costos)
+  • ETTH (mediana y media)
+  • MDD mensual
+  • Gain/Loss ratio
+  • Avg hold time
+  • Distribution (TP/SL/EXP counts)
+  • Ticker/Sector breakdown
+
+OBJETIVO: Alcanzar n≥50 trades en 2-3 meses para validación estadística sólida.
+
+═══════════════════════════════════════════════════════════════════════════════
+4. MEZCLA H3 + INTRADAY (CAPITAL $2,000)
+═══════════════════════════════════════════════════════════════════════════════
+
+ASIGNACIÓN CAPITAL:
+┌─────────────────────┬──────────────┬──────────────────────────┐
+│ Sistema             │ Capital      │ Objetivo                 │
+├─────────────────────┼──────────────┼──────────────────────────┤
+│ INTRADAY            │ $1,000       │ Flujo diario 1-2 trades  │
+│ H3 MULTIDÍA         │ $1,000       │ Bloques +6-7% puntuales  │
+├─────────────────────┼──────────────┼──────────────────────────┤
+│ TOTAL               │ $2,000       │ Complementariedad        │
+└─────────────────────┴──────────────┴──────────────────────────┘
+
+EXPECTATIVA MENSUAL (conservadora):
+  • Intraday: 20 trades × 1.2% × 60% win = +14.4% mensual
+  • H3: 6 trades × 5.3% EV = +31.8% mensual
+  • COMBINADO: ~23% mensual (promediando desbalance de capital)
+
+INDEPENDENCIA:
+  ✓ Cuentas separadas (o tracking mental estricto)
+  ✓ No reasignar capital mid-mes
+  ✓ Evaluar balance trimestral
+
+═══════════════════════════════════════════════════════════════════════════════
+5. AUDITORÍAS PENDIENTES
+═══════════════════════════════════════════════════════════════════════════════
+
+A. LEAKAGE/LOOK-AHEAD (ALTA PRIORIDAD)
+   □ Verificar features solo usan datos ≤ fecha t
+   □ Revisar 3 casos: timestamps, close, hi/lo
+   □ Zona horaria consistente EOD
+
+B. REGLA PRIMER TOQUE (CRÍTICO)
+   □ Validar manualmente 3 trades aleatorios por ticker
+   □ Confirmar: primer TP o SL intradía cierra trade
+   □ No usar close final del día si tocó antes
+
+C. COSTOS/FRICCIÓN (MEDIO)
+   □ Fee real roundtrip: 50 bps asumido → confirmar con broker
+   □ Slippage conservador: agregar 2-4 bps
+   □ Recalcular EV_net con costos reales
+
+D. CURVA DE SUPERVIVENCIA (BAJO)
+   □ Graficar % trades activos por día (D1→D4)
+   □ Identificar outliers de duración
+   □ Histograma distribución TP/SL/EXP
+
+═══════════════════════════════════════════════════════════════════════════════
+6. SIGUIENTES PASOS OPERATIVOS
+═══════════════════════════════════════════════════════════════════════════════
+
+INMEDIATO (Esta semana):
+1. ✅ Ejecutar pipeline Nov 2025 → validar con script extended
+2. ⚠️  Auditar 3 trades aleatorios (regla primer toque)
+3. ⚠️  Confirmar costos reales con broker
+
+CORTO PLAZO (2 semanas):
+4. ⚠️  Completar walk-forward Dic 2025
+5. ⚠️  Alcanzar n≥30 trades (reportar Wilson CI)
+6. ⚠️  Generar gráficos: supervivencia, distribución, ticker breakdown
+
+MEDIANO PLAZO (1 mes):
+7. ⚠️  Alcanzar n≥50 trades (validación estadística)
+8. ⚠️  Sensibilidad: sweep TP 5-8%, SL 0.3-1.0%
+9. ⚠️  Sharpe "swing" mensual
+
+LARGO PLAZO (Trimestre):
+10. ⚠️  Comparar resultados reales vs backtest
+11. ⚠️  Ajustar capital H3/intraday si necesario
+12. ⚠️  Evaluar expansión universo tickers
+
+═══════════════════════════════════════════════════════════════════════════════
+7. RESUMEN EJECUTIVO
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ SISTEMA H3 APROBADO PRELIMINARMENTE
+
+Fortalezas demostradas (Oct 2025):
+  • Win rate 83.3% (CI: 43.6%-97.0%)
+  • EV net 5.33% > 3.5% requerido
+  • ETTH 3.0d < 4d máximo
+  • MDD 0% (sin drawdown)
+  • R:R ~7:1 consistente
+
+Riesgos identificados:
+  ⚠️  Muestra pequeña (n=6): baja confianza estadística
+  ⚠️  Auditoría primer toque pendiente
+  ⚠️  Costos reales no confirmados
+  ⚠️  Necesario n≥50 para confiabilidad
+
+Acción recomendada:
+  → OPERAR EN VIVO con capital limitado ($300-500/trade)
+  → MONITOREAR ESTRICTAMENTE Nov/Dic
+  → CONGELAR PARÁMETROS (no ajustar)
+  → REPORTAR MENSUAL con métricas completas
+
+Estado: 🟢 VERDE (precaución por muestra)
+
+═══════════════════════════════════════════════════════════════════════════════
+Próxima revisión: 1 Dic 2025 (tras 2 meses walk-forward)
+═══════════════════════════════════════════════════════════════════════════════

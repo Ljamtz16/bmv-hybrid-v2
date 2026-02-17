@@ -1,0 +1,214 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# BMV HYBRID - RUNTIME CONFIGURATION (runtime.env)
+# 
+# Este archivo centraliza TODA la configuración del sistema.
+# Se carga en todos los scripts vía: source ~/bmv_runtime/config/runtime.env
+# 
+# Ubicación: ~/bmv_runtime/config/runtime.env
+# Permisos: 600 (solo propietario puede leer)
+# ═══════════════════════════════════════════════════════════════════════════
+
+# ───────────────────────────────────────────────────────────────────────────
+# 1. RUTAS (CRÍTICO - todo relativo a BVM_RUNTIME)
+# ───────────────────────────────────────────────────────────────────────────
+
+export BVM_RUNTIME="${HOME}/bmv_runtime"
+export BVM_CODE="${HOME}/bmv_hybrid_clean_v3"
+export BVM_DATA="${BVM_RUNTIME}/data"
+export BVM_REPORTS="${BVM_RUNTIME}/reports"
+export BVM_LOGS="${BVM_RUNTIME}/logs"
+export BVM_STATE="${BVM_RUNTIME}/state"
+export BVM_CONFIG="${BVM_RUNTIME}/config"
+export BVM_MODELS="${BVM_RUNTIME}/models"
+export BVM_VENV="${BVM_CODE}/.venv"
+
+# Python environment
+export PYTHONPATH="${BVM_CODE}:${PYTHONPATH}"
+export PYTHONUNBUFFERED=1
+
+# ───────────────────────────────────────────────────────────────────────────
+# 2. APLICACIÓN
+# ───────────────────────────────────────────────────────────────────────────
+
+# Modo de operación
+export MODE="paper"
+
+# Zona horaria (CRÍTICO para trading BMV)
+export TZ="America/Mexico_City"
+
+# Dashboard
+export DASH_PORT="5000"
+export DASH_WORKERS="2"
+export DASH_TIMEOUT="30"
+
+# ───────────────────────────────────────────────────────────────────────────
+# 3. DATOS
+# ───────────────────────────────────────────────────────────────────────────
+
+# Tickers a monitorear
+export TICKERS="AMXL,GAPPXL,WALMEX,TELEVISA,BIMBOA"
+
+# Fuente de datos
+export DATA_SOURCE="yfinance"
+
+# Retención de datos históricos (días)
+export DATA_RETENTION_DAYS="90"
+
+# Intervalos de datos
+export INTRADAY_INTERVAL="1h"    # 1 hora
+export DAILY_INTERVAL="1d"       # 1 día
+
+# ───────────────────────────────────────────────────────────────────────────
+# 4. TRADING (PAPER MODE)
+# ───────────────────────────────────────────────────────────────────────────
+
+# Capital inicial (USD o MXN según instrumento)
+export PAPER_CAPITAL="100000"
+
+# Límite de posiciones abiertas simultáneamente
+export POSITION_LIMIT="5"
+
+# Máximo tamaño de posición (% del capital)
+export MAX_POSITION_SIZE_PCT="5"
+
+# Stop Loss por defecto (%)
+export DEFAULT_SL_PCT="1.0"
+
+# Take Profit por defecto (%)
+export DEFAULT_TP_PCT="1.5"
+
+# Trailing Stop (usar ATR dinámico)
+export USE_TRAILING_ATR="true"
+
+# ───────────────────────────────────────────────────────────────────────────
+# 5. TIMING (horarios de ejecución)
+# ───────────────────────────────────────────────────────────────────────────
+
+# Hora de tareas diarias (sincronizado con systemd timer)
+export DAILY_TASK_HOUR="06"
+export DAILY_TASK_MINUTE="00"
+export DAILY_TASK_TZ="America/Mexico_City"
+
+# Ventana de monitoreo en vivo (L-V)
+export MONITOR_START_HOUR="09"
+export MONITOR_START_MINUTE="30"
+export MONITOR_END_HOUR="16"
+export MONITOR_END_MINUTE="30"
+
+# Intervalo de escaneo (segundos)
+export MONITOR_INTERVAL_SEC="300"
+
+# ───────────────────────────────────────────────────────────────────────────
+# 6. LOGGING
+# ───────────────────────────────────────────────────────────────────────────
+
+# Nivel de logging
+export LOG_LEVEL="INFO"
+
+# Formato de logs
+export LOG_FORMAT="%(asctime)s [%(name)s] %(levelname)s: %(message)s"
+
+# Máximo tamaño de log file (MB)
+export LOG_MAX_SIZE_MB="100"
+
+# Backup de logs (días)
+export LOG_RETENTION_DAYS="30"
+
+# ───────────────────────────────────────────────────────────────────────────
+# 7. MODELOS & UMBRALES
+# ───────────────────────────────────────────────────────────────────────────
+
+# Modelo de probabilidad de ganancia
+export PROB_WIN_MODEL_PATH="${BVM_MODELS}/prob_win_calibrated.joblib"
+
+# Modelos de retorno esperado (H3, H5)
+export RETURN_MODEL_H3_PATH="${BVM_MODELS}/return_model_H3.joblib"
+export RETURN_MODEL_H5_PATH="${BVM_MODELS}/return_model_H5.joblib"
+
+# Umbrales de decisión por ticker
+export THRESHOLDS_PATH="${BVM_MODELS}/thresholds_by_ticker.json"
+
+# Buy gate dinámico
+export BUY_GATE_PATH="${BVM_MODELS}/buy_gate.json"
+
+# Mínimo de confianza para ejecutar (0-1)
+export MIN_CONFIDENCE="0.60"
+
+# ───────────────────────────────────────────────────────────────────────────
+# 8. NOTIFICACIONES (Telegram - opcional)
+# ───────────────────────────────────────────────────────────────────────────
+
+# Bot token de Telegram
+export TELEGRAM_BOT_TOKEN=""
+
+# Chat ID (persona o grupo)
+export TELEGRAM_CHAT_ID=""
+
+# Habilitar notificaciones
+export ENABLE_TELEGRAM_NOTIFICATIONS="false"
+
+# Notificar solo eventos importantes (CRITICAL) o también INFO
+export TELEGRAM_NOTIFICATION_LEVEL="CRITICAL"
+
+# ───────────────────────────────────────────────────────────────────────────
+# 9. MONITOREO & HEALTH CHECK
+# ───────────────────────────────────────────────────────────────────────────
+
+# Archivo de estado (last_run.json)
+export STATE_FILE="${BVM_STATE}/last_run.json"
+
+# Archivo de lock (evita doble ejecución)
+export LOCK_FILE="${BVM_STATE}/lock_daily"
+
+# Límites de recursos en systemd
+export SERVICE_MEMORY_LIMIT="768M"
+export SERVICE_CPU_QUOTA="80%"
+
+# CPU temp warning (°C)
+export CPU_TEMP_WARNING_C="70"
+export CPU_TEMP_CRITICAL_C="85"
+
+# Disk free warning (GB)
+export DISK_FREE_WARNING_GB="5"
+export DISK_FREE_CRITICAL_GB="1"
+
+# RAM free warning (%)
+export RAM_USAGE_WARNING_PCT="85"
+
+# ───────────────────────────────────────────────────────────────────────────
+# 10. BACKUP & RETENTION
+# ───────────────────────────────────────────────────────────────────────────
+
+# Realizar backup automático de reportes
+export AUTO_BACKUP_ENABLED="true"
+
+# Comprimir backups (tar.gz)
+export BACKUP_COMPRESS="true"
+
+# Retención de backups (días)
+export BACKUP_RETENTION_DAYS="90"
+
+# Destino de backup (opcional - ruta NFS, USB, etc)
+export BACKUP_DESTINATION=""
+
+# ───────────────────────────────────────────────────────────────────────────
+# 11. API EXTERNA (Sentry, DataDog, etc - opcional)
+# ───────────────────────────────────────────────────────────────────────────
+
+# Sentry DSN (error tracking)
+export SENTRY_DSN=""
+
+# DataDog API key
+export DATADOG_API_KEY=""
+
+# ───────────────────────────────────────────────────────────────────────────
+# NOTAS IMPORTANTES
+# ───────────────────────────────────────────────────────────────────────────
+
+# 1. NO guardes secretos en git. Edita este archivo localmente en la RPi
+# 2. Permisos: chmod 600 ~/bmv_runtime/config/runtime.env
+# 3. Recargar en bash: source ~/bmv_runtime/config/runtime.env
+# 4. Systemd carga automáticamente via EnvironmentFile=...
+# 5. Para passwords, usa ~/.ssh o gpg-agent
+
+# ═══════════════════════════════════════════════════════════════════════════

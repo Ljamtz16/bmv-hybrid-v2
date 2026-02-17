@@ -1,0 +1,33 @@
+# Data sources config for USA Hybrid Clean V2
+intraday5:
+  provider: yfinance
+  interval: 5m
+  buffer_path: data/intraday5/buffer/
+  history_path: data/intraday5/history/
+intraday15:
+  provider: yfinance
+  interval: 15m
+  history_path: data/intraday15/history/
+daily:
+  provider: yfinance
+  interval: 1d
+  path: data/daily/
+tickers:
+  - AAPL
+  - MSFT
+  - NVDA
+  - AMD
+  - TSLA
+  - AMZN
+  - JPM
+  - GS
+  - MS
+  - CAT
+  - XOM
+  - CVX
+  - WMT
+  - PFE
+  - JNJ
+  - SPY
+  - QQQ
+  - IWM

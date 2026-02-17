@@ -1,0 +1,81 @@
+# Configuración de Guardrails y Umbrales
+# Usado por health checks y alertas automáticas
+
+quality:
+  # Métricas de calibración y precisión
+  brier_max: 0.14          # Brier score máximo aceptable
+  ece_max: 0.05            # Expected Calibration Error máximo
+  brier_critical: 0.16     # Nivel crítico que requiere recalibración inmediata
+  ece_critical: 0.07       # ECE crítico que requiere intervención
+
+coverage:
+  # Cobertura de señales post-gates
+  min_pct: 15              # Mínimo % de señales (gates muy restrictivos)
+  max_pct: 35              # Máximo % de señales (gates muy permisivos)
+  min_signals_absolute: 10 # Mínimo absoluto de señales requeridas
+
+drift:
+  # Detección de drift en features
+  psi_warning: 0.2         # PSI que dispara warning
+  psi_critical: 0.3        # PSI que requiere reentrenamiento
+  window_days: 30          # Ventana de referencia para calcular drift
+
+concentration:
+  # Riesgo de concentración
+  max_ticker_pct: 25       # Máximo % de exposición en un ticker
+  max_top5_pct: 50         # Máximo % de exposición en top 5 tickers
+  max_sector_pct: 40       # Máximo % de exposición en un sector
+
+regime:
+  # Distribución de regímenes
+  max_single_regime_pct: 60  # Máximo % permitido en un solo régimen
+  min_regime_signals: 5      # Mínimo de señales por régimen
+
+sizing:
+  # Position sizing y capital
+  account_cash: 1000.0     # Capital total disponible
+  per_trade_target: 250.0  # Cash objetivo por posición
+  max_positions: 8         # Máximo de posiciones abiertas
+  max_per_ticker: 2        # Máximo de posiciones en mismo ticker
+  fee_pct: 0.0005          # Costos estimados (5 bps)
+  min_qty: 1               # Cantidad mínima por trade
+
+alerts:
+  # Configuración de alertas
+  consecutive_failures: 2  # Días consecutivos con errores para escalar
+  notify_on_drift: true    # Alertar sobre drift de features
+  notify_on_coverage: true # Alertar sobre cobertura anómala
+  notify_on_quality: true  # Alertar sobre degradación de calidad
+
+recalibration_triggers:
+  # Triggers automáticos para recalibración
+  ece_threshold: 0.07
+  brier_threshold: 0.16
+  consecutive_days: 2      # Días consecutivos sobre threshold
+  auto_recalibrate: false  # Si true, corre calibration automáticamente
+
+monitoring:
+  # Métricas a trackear diariamente
+  key_features:
+    - ret_1d
+    - vol_20d
+    - atr_14d
+    - pos_in_range_20d
+  
+  quality_metrics:
+    - brier
+    - ece
+    - coverage
+    - regime_balance
+  
+  risk_metrics:
+    - ticker_concentration
+    - sector_concentration
+    - total_exposure
+    - avg_prob_win
+
+thresholds_by_regime:
+  # Umbrales de probabilidad por régimen (sync con policies.yaml)
+  low_vol: 0.60
+  med_vol: 0.62
+  high_vol: 0.65

@@ -1,0 +1,30 @@
+{
+  "name": "Policy Dynamic V2 (Q4-2025)",
+  "created_at": "2025-10-30",
+  "description": "Runner-driven dynamic thresholds with two-stage fallback, monthly overrides for low-trade months, and snapshotting/aggregation enabled.",
+  "target_trades_range": [8, 15],
+  "fallbacks": {
+    "first_pass": {
+      "min_prob": 0.54,
+      "min_abs_yhat": 0.05,
+      "per_trade_cash": 400
+    },
+    "second_pass": {
+      "min_prob": 0.52,
+      "min_abs_yhat": 0.04,
+      "gate_threshold": 0.56,
+      "max_open": 7
+    }
+  },
+  "monthly_overrides": {
+    "2025-07": {"min_prob": 0.52, "min_abs_yhat": 0.04, "per_trade_cash": 400, "gate_threshold": 0.56, "max_open": 7},
+    "2025-08": {"min_prob": 0.52, "min_abs_yhat": 0.04, "per_trade_cash": 400, "gate_threshold": 0.56, "max_open": 7},
+    "2025-09": {"min_prob": 0.52, "min_abs_yhat": 0.04, "per_trade_cash": 400, "gate_threshold": 0.56, "max_open": 7}
+  },
+  "notes": [
+    "Policies are resolved monthly; when trades < 8 after primary sim, the runner applies first_pass fallback and re-simulates all + sectors.",
+    "If still < 8 trades, second_pass fallback applies including gate/max_open relax, and forecast_with_patterns is rebuilt before re-sim.",
+    "Each run is snapshotted under reports/forecast/<month>/history/run_<timestamp> and aggregated by scripts/34_aggregate_run_history.py.",
+    "A/B for 2025-01..09 vs baseline (16 trades / 336 PnL): post-fallback delivered 18 trades / 484.63 PnL (rows=79)."
+  ]
+}

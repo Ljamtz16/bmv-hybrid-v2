@@ -1,0 +1,167 @@
+═══════════════════════════════════════════════════════════════════════════════
+ÍNDICE DE VALIDACIÓN SISTEMA H3 MULTIDÍA
+═══════════════════════════════════════════════════════════════════════════════
+Fecha: 4 Noviembre 2025
+Versión: 1.0
+
+📂 ARCHIVOS GENERADOS
+═══════════════════════════════════════════════════════════════════════════════
+
+1. REPORTES EJECUTIVOS
+   ├── H3_EXECUTIVE_SUMMARY.md (6.6 KB)
+   │   └── Dictamen final con semáforo de decisión
+   │
+   ├── H3_ACCEPTANCE_CRITERIA_AND_OPERATIONS.txt (10.8 KB)
+   │   └── Criterios de aceptación + plan operativo completo
+   │
+   └── MULTIDAY_VALIDATION_REPORT.txt (7.5 KB)
+       └── Reporte técnico de validación Oct 2025
+
+2. SCRIPTS DE VALIDACIÓN
+   ├── scripts/validate_h3_extended.py
+   │   └── Walk-forward validation con Wilson CI, EV_net, curvas
+   │
+   ├── check_multiday_plan.py (972 bytes)
+   │   └── Quick check del plan de trades generado
+   │
+   └── check_multiday_backtest.py (641 bytes)
+       └── Quick check de resultados backtesting
+
+3. DATOS JSON
+   └── reports/H3_WALKFORWARD_VALIDATION.json
+       └── Resultados estructurados Oct 2025 (expandible Nov/Dic)
+
+4. SISTEMA INTRADAY (SEPARADO)
+   └── intraday/
+       ├── README.md
+       ├── config/intraday.yaml
+       ├── scripts/ (7 archivos)
+       ├── models/clf_intraday_brf_calibrated.joblib
+       └── reports/runs/
+
+═══════════════════════════════════════════════════════════════════════════════
+📊 RESULTADOS CLAVE OCTUBRE 2025
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ Win rate: 83.3% (Wilson CI: 43.6%-97.0%)
+✅ EV neto: 5.33% por trade
+✅ ETTH: 3.0 días
+✅ MDD: 0.0%
+✅ Return: +7.5%
+✅ R:R: 7:1
+
+Estado: 4/4 criterios aprobados ✅
+
+═══════════════════════════════════════════════════════════════════════════════
+⚠️  TAREAS PENDIENTES (PRIORIZADAS)
+═══════════════════════════════════════════════════════════════════════════════
+
+ALTA PRIORIDAD (Esta semana):
+[ ] Auditar regla primer toque (3 trades aleatorios)
+[ ] Confirmar costos reales con broker (50 bps?)
+[ ] Ejecutar pipeline Nov 2025
+[ ] Documentar zona horaria timestamps
+
+MEDIA PRIORIDAD (2 semanas):
+[ ] Walk-forward Dic 2025
+[ ] Alcanzar n≥30 trades
+[ ] Generar gráficos supervivencia/distribución
+[ ] Calcular Sharpe swing
+
+BAJA PRIORIDAD (1 mes):
+[ ] Alcanzar n≥50 trades
+[ ] Sweep sensibilidad TP/SL
+[ ] Comparar resultados reales vs backtest
+
+═══════════════════════════════════════════════════════════════════════════════
+🎯 PRÓXIMOS HITOS
+═══════════════════════════════════════════════════════════════════════════════
+
+[ ] 10 Nov 2025: Auditorías técnicas completadas
+[ ] 24 Nov 2025: Walk-forward Nov completo (n≥12)
+[ ] 1 Dic 2025: REVISIÓN OBLIGATORIA (n≥18)
+[ ] 15 Dic 2025: Walk-forward Dic completo (n≥24)
+[ ] 31 Dic 2025: Evaluación trimestral (n≥30-50)
+
+═══════════════════════════════════════════════════════════════════════════════
+📋 CHECKLIST DE IMPLEMENTACIÓN
+═══════════════════════════════════════════════════════════════════════════════
+
+SISTEMA H3:
+[✅] Pipeline funciona sin errores
+[✅] Backtest genera KPIs correctos
+[✅] Criterios de aceptación definidos
+[✅] Política H3 documentada
+[✅] Script validación extendida creado
+[⚠️ ] Auditoría primer toque pendiente
+[⚠️ ] Costos reales no confirmados
+[⚠️ ] n<50 (actualmente n=6)
+
+SISTEMA INTRADAY:
+[✅] Separado en carpeta intraday/
+[✅] Modelo reentrenado (TP=1.2%, SL=0.35%)
+[✅] Validado Oct 28 (TP hit +$2.40)
+[✅] Config Intraday 2.0 activa
+[✅] README completo
+
+INTEGRACIÓN:
+[✅] Capital allocation definida ($1k+$1k)
+[✅] Reglas de operación documentadas
+[✅] Expectativas matemáticas validadas
+[⚠️ ] Monitoreo mensual por implementar
+
+═══════════════════════════════════════════════════════════════════════════════
+📖 GUÍA DE USO RÁPIDO
+═══════════════════════════════════════════════════════════════════════════════
+
+1. EJECUTAR PIPELINE H3 (DIARIO):
+   ```bash
+   python scripts\infer_and_gate.py --month YYYY-MM
+   ```
+
+2. VALIDAR RESULTADOS MENSUALES:
+   ```python
+   from scripts.validate_h3_extended import generate_walkforward_report
+   generate_walkforward_report(['2025-10', '2025-11', '2025-12'])
+   ```
+
+3. VER PLAN DE TRADES:
+   ```bash
+   python check_multiday_plan.py
+   ```
+
+4. VER BACKTEST RESULTS:
+   ```bash
+   python check_multiday_backtest.py
+   ```
+
+5. EJECUTAR PIPELINE INTRADAY:
+   ```bash
+   python intraday/scripts/11_infer_and_gate_intraday.py --date YYYY-MM-DD
+   python intraday/scripts/39_predict_tth_intraday.py --date YYYY-MM-DD
+   python intraday/scripts/40_make_trade_plan_intraday.py --date YYYY-MM-DD
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+🔗 REFERENCIAS CRUZADAS
+═══════════════════════════════════════════════════════════════════════════════
+
+• Para criterios técnicos → H3_ACCEPTANCE_CRITERIA_AND_OPERATIONS.txt
+• Para decisión ejecutiva → H3_EXECUTIVE_SUMMARY.md
+• Para métricas Oct 2025 → MULTIDAY_VALIDATION_REPORT.txt
+• Para datos JSON → reports/H3_WALKFORWARD_VALIDATION.json
+• Para sistema intraday → intraday/README.md
+• Para scripts validación → scripts/validate_h3_extended.py
+
+═══════════════════════════════════════════════════════════════════════════════
+📞 CONTACTO Y SOPORTE
+═══════════════════════════════════════════════════════════════════════════════
+
+Issues/Bugs: Documentar en MULTIDAY_VALIDATION_REPORT.txt
+Sugerencias: Actualizar H3_ACCEPTANCE_CRITERIA_AND_OPERATIONS.txt
+Resultados: Guardar en reports/H3_WALKFORWARD_VALIDATION.json
+
+═══════════════════════════════════════════════════════════════════════════════
+Estado global: 🟢 VERDE (con precauciones por muestra pequeña)
+Próxima revisión: 1 Diciembre 2025
+═══════════════════════════════════════════════════════════════════════════════

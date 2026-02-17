@@ -1,0 +1,8 @@
+﻿{
+    "month":  "2025-11",
+    "gate_threshold":  0.55,
+    "min_prob":  0.54,
+    "min_abs_yhat":  0.05,
+    "max_open":  5,
+    "per_trade_cash":  200
+}

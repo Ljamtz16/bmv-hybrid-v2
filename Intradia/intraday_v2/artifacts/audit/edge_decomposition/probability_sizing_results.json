@@ -1,0 +1,20 @@
+{
+  "sizing_verdict": "NO_MATERIAL_IMPACT",
+  "flat_sizing": {
+    "wr": 0.96,
+    "pf": 32.000000000000114,
+    "final_equity": 1.360476636205999,
+    "max_dd": 0.009999999999999983
+  },
+  "dynamic_sizing": {
+    "wr": 0.96,
+    "pf": 31.252655711257574,
+    "final_equity": 1.5664251899082262,
+    "max_dd": 0.014988529104414608
+  },
+  "improvement": {
+    "pf_pct": -2.3354509023204266,
+    "equity_pct": 15.13797063627362,
+    "dd_change_pct": 0.49885291044146246
+  }
+}

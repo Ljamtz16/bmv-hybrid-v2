@@ -1,0 +1,111 @@
+# =============================================
+# Configuración Intraday Mode - USA Hybrid Clean V1
+# =============================================
+mode: intraday
+interval: 15m              # velas de 15 minutos (alternativa: 1h)
+
+market:
+  tz: America/New_York
+  open: "09:30"
+  close: "16:00"
+  force_close: "15:55"     # Cierre forzado EOD
+
+capital:
+  max_total: 900           # Capital total máximo USD (INTRADAY 2.0)
+  per_trade_cash: 300      # Capital por operación (1-2 trades diarios)
+  max_open: 2              # Máximo 2 operaciones simultáneas
+
+risk:
+  tp_pct: 0.012            # 1.2% Take Profit (INTRADAY 2.0 - realista para 15m)
+  sl_pct: 0.0035           # 0.35% Stop Loss (R≈3.4:1)
+  cost_pct: 0.0005         # 0.05% costs (50 bps round-trip, bajar a 30 bps si falta oferta)
+  cooldown_days: 0         # Sin cooldown intradía
+  
+filters:
+  # === INTRADAY 2.0: Parámetros optimizados para 1-2 trades/día ===
+  prob_win_min: 0.08       # 8% para abrir embudo al inicio
+  p_tp_before_sl_min: 0.15 # P(TP antes que SL) mínima - empezar aquí, subir a 0.18 cuando estable
+  etth_max_days: 0.28      # ~6.7 barras (7.3 horas máximo)
+  # Filtros del plan (script 40)
+  min_expected_pnl_pct: 0.0  # mantener E[PnL] > 0 en el script 40
+  
+  # === Spread adaptativo (ajustado a cálculo high-low) ===
+  # Nota: spread_bps estimado de (high-low)/close, no bid-ask real
+  spread_base_bps: 50      # Caps conservadores [50, 70, 90]
+  spread_late_bps: 70      # Late session
+  spread_high_vol_bps: 90  # Alta volatilidad
+  
+  # === ATR (volatilidad intradía) ===
+  atr15m_min: 0.0035       # 0.35% (evita días planos)
+  atr15m_max: 0.025        # 2.5% (captura picos normales)
+  
+  # === Volumen y liquidez ===
+  volume_min_percentile: 40 # Volumen >= P40 (mantener)
+  
+  # === Whitelist temporal (tickers líquidos) ===
+  ticker_whitelist: ["AMD", "NVDA", "TSLA", "MSFT", "AAPL", "AMZN", "META", "GOOG", "NFLX", "JPM", "XOM"]
+  
+  # === Dirección ===
+  allow_short: true        # Activado para aumentar frecuencia y aprovechar ambos lados
+
+plan:
+  max_per_ticker: 1        # Máx 1 operación por ticker simultánea
+  max_sector_share: 0.6    # Máx 60% del capital en un sector
+  rank_metric: exp_pnl_per_time  # Ordenar por E[PnL]/ETTH
+  top_n: 15                # Top candidatos a considerar
+
+tth:
+  sims: 500                # Simulaciones Monte Carlo
+  steps_per_day: 26        # 6.5h * 4 intervalos (15m) = 26 steps
+  calibrate: true          # Aplicar calibración
+  brier_target: 0.18       # Target Brier score
+  hazard_floor: 0.001      # Piso de hazard
+  hazard_cap: 0.15         # Techo de hazard
+  scale_tp: 1.00           # Ajuste calibración TP (subir a 1.10 si P(TP<SL) muy bajo)
+  scale_sl: 1.00           # Ajuste calibración SL
+
+telegram:
+  enabled: true
+  chat_id: ""              # Configurar con tu chat_id
+  token_env: "TELEGRAM_TOKEN"
+  throttle_minutes: 5      # Anti-spam
+
+logging:
+  level: INFO
+  out_dir: reports/intraday
+  predictions_log: data/trading/predictions_log_intraday.csv
+
+data:
+  intraday_dir: data/intraday
+  daily_prices: data/us/ohlcv_us_daily.csv
+  tickers_master: data/us/tickers_master.csv
+  
+models:
+  clf_intraday: models/clf_intraday.joblib
+  tth_intraday: models/tth_intraday.joblib
+  scaler_intraday: models/scaler_intraday.joblib
+  
+features:
+  technical:
+    - RSI_7
+    - RSI_14
+    - EMA_9
+    - EMA_20
+    - EMA_50
+    - MACD
+    - MACD_signal
+    - MACD_hist
+    - ATR_14
+    - ATR_pct
+    - volume_zscore
+    - VWAP_dev
+  patterns:
+    - hammer
+    - doji
+    - engulfing
+    - morning_star
+    - evening_star
+  liquidity:
+    - spread_bps
+    - turnover
+    - volume_ma_ratio

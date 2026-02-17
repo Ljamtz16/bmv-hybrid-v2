@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Predicción vs Real - USA Hybrid Clean V1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f5f5f5;
+            border-bottom: 2px solid #ddd;
+            overflow-x: auto;
+        }
+        
+        .tab-button {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px 20px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-button:hover {
+            background: #e8e8e8;
+            color: #667eea;
+        }
+        
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            background: white;
+        }
+        
+        .content {
+            padding: 30px;
+            display: none;
+        }
+        
+        .content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .metric-card h3 {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .metric-card .value {
+            font-size: 2.2em;
+            font-weight: bold;
+        }
+        
+        .metric-card.negative {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .metric-card.positive {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .gallery-item {
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .gallery-item h3 {
+            padding: 15px;
+            background: white;
+            margin: 0;
+            font-size: 1em;
+            color: #667eea;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .subsection {
+            margin-bottom: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .positive-value {
+            color: #4caf50;
+            font-weight: 600;
+        }
+        
+        .negative-value {
+            color: #f44336;
+            font-weight: 600;
+        }
+        
+        footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #ddd;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        .modal-content {
+            margin: auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            overflow: auto;
+            margin-top: 5vh;
+            background: white;
+            border-radius: 8px;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+        
+        .modal-img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Análisis Predicción vs Realidad</h1>
+            <p>USA Hybrid Clean V1 - Modelos de Retorno (H3) y Probabilidad de Ganancia</p>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('overview')">📈 Resumen</button>
+            <button class="tab-button" onclick="switchTab('regression')">📉 Regresión (Retorno)</button>
+            <button class="tab-button" onclick="switchTab('probability')">📊 Probabilidad</button>
+            <button class="tab-button" onclick="switchTab('trading')">💰 Trading</button>
+            <button class="tab-button" onclick="switchTab('interpretation')">💡 Interpretación</button>
+        </div>
+        
+        <!-- TAB 1: OVERVIEW -->
+        <div id="overview" class="content active">
+            <h2 class="section-title">Resumen Ejecutivo</h2>
+            
+            <div class="subsection">
+                <h3>📌 Modelo de Retorno (y_hat vs y_H3)</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h3>MAE</h3>
+                        <div class="value">0.0518</div>
+                        <p>Error absoluto promedio</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>RMSE</h3>
+                        <div class="value">0.0685</div>
+                        <p>Root mean squared error</p>
+                    </div>
+                    <div class="metric-card positive">
+                        <h3>Directional Accuracy</h3>
+                        <div class="value">48.81%</div>
+                        <p>% Signo correcto</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Muestras</h3>
+                        <div class="value">26,640</div>
+                        <p>Observaciones totales</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3>📌 Modelo de Probabilidad (prob_win)</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h3>Brier Score</h3>
+                        <div class="value">0.2827</div>
+                        <p>Error de probabilidades</p>
+                    </div>
+                    <div class="metric-card positive">
+                        <h3>Win Rate Real</h3>
+                        <div class="value">54.61%</div>
+                        <p>% de retornos H3 > 0</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Prob Predicha</h3>
+                        <div class="value">42.16%</div>
+                        <p>Promedio prob_win</p>
+                    </div>
+                    <div class="metric-card negative">
+                        <h3>Sesgo</h3>
+                        <div class="value">-12.45%</div>
+                        <p>Subpredicción sistemática</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3>📌 Trades Ejecutados (Equity Curve)</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card negative">
+                        <h3>Total Trades</h3>
+                        <div class="value">4</div>
+                        <p>Operaciones realizadas</p>
+                    </div>
+                    <div class="metric-card negative">
+                        <h3>Win Rate</h3>
+                        <div class="value">0%</div>
+                        <p>Victorias en período</p>
+                    </div>
+                    <div class="metric-card negative">
+                        <h3>PnL Total</h3>
+                        <div class="value">-$25,436</div>
+                        <p>Pérdida acumulada</p>
+                    </div>
+                    <div class="metric-card negative">
+                        <h3>Avg Loss</h3>
+                        <div class="value">-$6,359</div>
+                        <p>Pérdida por trade</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TAB 2: REGRESSION -->
+        <div id="regression" class="content">
+            <h2 class="section-title">Análisis de Regresión (Modelo de Retorno)</h2>
+            
+            <div class="subsection">
+                <h3>🎯 Gráficas Globales</h3>
+                <div class="gallery">
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/01_pred_vs_real_all.png" alt="Predicción vs Real">
+                        <h3>Predicción vs Real (Líneas)</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/02_error_timeseries_all.png" alt="Error Absoluto">
+                        <h3>Error Absoluto en Tiempo</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/03_error_band_all.png" alt="Banda de Error">
+                        <h3>Predicción + Banda de Error</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/04_scatter_all.png" alt="Scatter Plot">
+                        <h3>Scatter: Real vs Predicción</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3>🎯 Top 3 Tickers</h3>
+                <p style="margin-bottom: 15px; color: #666;">AAPL, AMD, AMZN (con más observaciones)</p>
+                <div class="gallery">
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/01_pred_vs_real_AAPL.png" alt="AAPL">
+                        <h3>AAPL: Pred vs Real</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/03_error_band_AAPL.png" alt="AAPL Band">
+                        <h3>AAPL: Banda de Error</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/04_scatter_AAPL.png" alt="AAPL Scatter">
+                        <h3>AAPL: Scatter Plot</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/01_pred_vs_real_AMD.png" alt="AMD">
+                        <h3>AMD: Pred vs Real</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/03_error_band_AMD.png" alt="AMD Band">
+                        <h3>AMD: Banda de Error</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/04_scatter_AMD.png" alt="AMD Scatter">
+                        <h3>AMD: Scatter Plot</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3>📊 Tabla de Métricas por Ticker</h3>
+                <table>
+                    <tr>
+                        <th>Ticker</th>
+                        <th>MAE</th>
+                        <th>RMSE</th>
+                        <th>Dir Acc</th>
+                        <th>Muestras</th>
+                    </tr>
+                    <tr>
+                        <td><strong>AAPL</strong></td>
+                        <td>0.03160</td>
+                        <td>0.04173</td>
+                        <td>47.64%</td>
+                        <td>1,480</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AMD</strong></td>
+                        <td>0.04560</td>
+                        <td>0.06004</td>
+                        <td>50.00%</td>
+                        <td>1,480</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AMZN</strong></td>
+                        <td>0.02998</td>
+                        <td>0.04020</td>
+                        <td>51.62%</td>
+                        <td>1,480</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CVX</strong></td>
+                        <td>0.02491</td>
+                        <td>0.03427</td>
+                        <td class="positive-value">57.43%</td>
+                        <td>1,480</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JNJ</strong></td>
+                        <td>0.01770</td>
+                        <td>0.02355</td>
+                        <td>52.70%</td>
+                        <td>1,480</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <!-- TAB 3: PROBABILITY -->
+        <div id="probability" class="content">
+            <h2 class="section-title">Análisis de Probabilidad (prob_win)</h2>
+            
+            <div class="subsection">
+                <h3>🎯 Curvas de Calibración</h3>
+                <div class="gallery">
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/05_calibration_all.png" alt="Calibración Global">
+                        <h3>Calibración Global</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/05_calibration_AAPL.png" alt="AAPL Calibración">
+                        <h3>AAPL: Calibración</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/05_calibration_AMD.png" alt="AMD Calibración">
+                        <h3>AMD: Calibración</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/05_calibration_AMZN.png" alt="AMZN Calibración">
+                        <h3>AMZN: Calibración</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3>📊 Brier Score por Ticker</h3>
+                <p style="margin-bottom: 15px; color: #666;">Más bajo = mejor calibración. Rango: [0, 1]</p>
+                <table>
+                    <tr>
+                        <th>Ticker</th>
+                        <th>Brier Score</th>
+                        <th>Win Rate Real</th>
+                        <th>Prob Predicha</th>
+                        <th>Sesgo</th>
+                    </tr>
+                    <tr>
+                        <td><strong>XOM</strong></td>
+                        <td>0.2099 ✓</td>
+                        <td>53.78%</td>
+                        <td>56.00%</td>
+                        <td class="positive-value">+2.22%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JNJ</strong></td>
+                        <td>0.2563</td>
+                        <td>52.77%</td>
+                        <td>48.50%</td>
+                        <td class="negative-value">-4.27%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AAPL</strong></td>
+                        <td>0.2744</td>
+                        <td>56.08%</td>
+                        <td>44.54%</td>
+                        <td class="negative-value">-11.54%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AMD</strong></td>
+                        <td>0.2678</td>
+                        <td>53.04%</td>
+                        <td>52.75%</td>
+                        <td class="positive-value">-0.29%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>QQQ</strong></td>
+                        <td>0.3426 ⚠️</td>
+                        <td>57.77%</td>
+                        <td>26.45%</td>
+                        <td class="negative-value">-31.32%</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <!-- TAB 4: TRADING -->
+        <div id="trading" class="content">
+            <h2 class="section-title">Resultados de Trading (Equity Curve)</h2>
+            
+            <div class="subsection">
+                <h3>💰 Gráficas de PnL</h3>
+                <div class="gallery">
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/06_pnl_timeseries.png" alt="PnL Timeline">
+                        <h3>PnL en Tiempo</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/07_pnl_distribution.png" alt="PnL Distribution">
+                        <h3>Distribución de PnL</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/08_pnl_by_ticker.png" alt="PnL por Ticker">
+                        <h3>PnL por Ticker</h3>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="outputs/analysis/09_win_rate_by_ticker.png" alt="Win Rate">
+                        <h3>Win Rate por Ticker</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h3>⚠️ Datos Actuales (Período: Nov-Dic 2025)</h3>
+                <p style="margin-bottom: 15px; color: #f44336; font-weight: bold;">
+                    ⚠️ Nota: Solo 4 trades en el período. Datos insuficientes para validación estadística.
+                </p>
+                <table>
+                    <tr>
+                        <th>Métrica</th>
+                        <th>Valor</th>
+                        <th>Observación</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Trades</strong></td>
+                        <td>4</td>
+                        <td>Período muy corto</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Win Rate</strong></td>
+                        <td class="negative-value">0%</td>
+                        <td>Todos perdedores (SL triggered)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PnL Total</strong></td>
+                        <td class="negative-value">-$25,436</td>
+                        <td>Debido a stop loss natural</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Avg Loss</strong></td>
+                        <td class="negative-value">-$6,359</td>
+                        <td>Pérdida promedio por trade</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Profit Factor</strong></td>
+                        <td>0.00</td>
+                        <td>No hay ganancias</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <!-- TAB 5: INTERPRETATION -->
+        <div id="interpretation" class="content">
+            <h2 class="section-title">💡 Interpretación y Recomendaciones</h2>
+            
+            <div class="subsection">
+                <h3>✅ Fortalezas del Modelo</h3>
+                <ul style="padding-left: 20px; line-height: 1.8;">
+                    <li><strong>MAE bajo (0.0518):</strong> El error promedio en predicción de retorno es muy pequeño.</li>
+                    <li><strong>Consistencia:</strong> Métricas similares en todos los tickers (diversificación funciona).</li>
+                    <li><strong>Calibración XOM:</strong> Brier Score 0.21 indica que prob_win es bastante confiable para este ticker.</li>
+                    <li><strong>Win rate real 54.61%:</strong> Ligeramente sobre 50%, lo que sugiere algo de skill en predicción.</li>
+                </ul>
+            </div>
+            
+            <div class="subsection">
+                <h3>⚠️ Debilidades / Áreas de Mejora</h3>
+                <ul style="padding-left: 20px; line-height: 1.8;">
+                    <li><strong>Directional Accuracy 48.81%:</strong> Apenas por debajo del 50% aleatorio. El modelo NO está prediciendo bien la dirección del retorno.</li>
+                    <li><strong>Sesgo en prob_win:</strong> El modelo subestima (42% predicha vs 54.61% real). Tendencia a ser conservador.</li>
+                    <li><strong>QQQ muy mal calibrado (Brier: 0.34):</strong> Subpredicción extrema (-31%). Requiere recalibración.</li>
+                    <li><strong>Datos de trading actuales:</strong> Solo 4 trades en período reciente. Muestra pequeña, no concluyente.</li>
+                </ul>
+            </div>
+            
+            <div class="subsection">
+                <h3>🎯 Acciones Recomendadas</h3>
+                <ol style="padding-left: 20px; line-height: 1.8;">
+                    <li><strong>Recalibrar prob_win:</strong> Usar calibración isotónica o Platt scaling para ajustar sesgos sistemáticos.</li>
+                    <li><strong>Mejorar directional accuracy:</strong>
+                        <ul style="padding-left: 20px; margin-top: 10px;">
+                            <li>Revisar features (¿son suficientemente predictivos?).</li>
+                            <li>Probar ensemble con múltiples modelos.</li>
+                            <li>Analizar períodos de pérdida: ¿hay cambios de régimen?</li>
+                        </ul>
+                    </li>
+                    <li><strong>Análisis de rentabilidad:</strong> Esperar más trades para validar con horizonte temporal más largo (mínimo 50 trades).</li>
+                    <li><strong>Riesgo/Recompensa:</strong> Revisitar tamaño de posiciones. ¿SL está bien calibrado?</li>
+                    <li><strong>Monitoreo contínuo:</strong> Graficar predicción vs real cada semana/mes para detectar degradación temprana.</li>
+                </ol>
+            </div>
+            
+            <div class="subsection">
+                <h3>📚 Interpretación de Métricas</h3>
+                <table>
+                    <tr>
+                        <th>Métrica</th>
+                        <th>Qué significa</th>
+                        <th>Rango bueno</th>
+                    </tr>
+                    <tr>
+                        <td><strong>MAE</strong></td>
+                        <td>Error promedio en unidades de retorno</td>
+                        <td>< 0.05</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RMSE</strong></td>
+                        <td>Penaliza errores grandes más</td>
+                        <td>< 0.08</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dir Accuracy</strong></td>
+                        <td>% de aciertos en signo (sube/baja)</td>
+                        <td>> 52%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Brier Score</strong></td>
+                        <td>Error de probabilidades (0=perfecto)</td>
+                        <td>< 0.25</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Profit Factor</strong></td>
+                        <td>Ganancias / Pérdidas (volatilidad pura)</td>
+                        <td>> 1.5</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Análisis generado: 12 Enero 2026 | Datos: 2020-01-02 a 2025-10-31 (26,640 obs) | Modelos: return_model_H3 + prob_win_clean</p>
+            <p style="margin-top: 10px; font-size: 0.85em; color: #999;">
+                Scripts: <code>analysis_pred_vs_real.py</code> y <code>analysis_trading_results.py</code>
+            </p>
+        </footer>
+    </div>
+    
+    <!-- Modal para imágenes grandes -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" class="modal-img" src="" alt="">
+        </div>
+    </div>
+    
+    <script>
+        function switchTab(tabName) {
+            // Ocultar todos los tabs
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(c => c.classList.remove('active'));
+            
+            // Desactivar todos los botones
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(b => b.classList.remove('active'));
+            
+            // Mostrar tab seleccionado
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activar botón seleccionado
+            event.target.classList.add('active');
+        }
+        
+        function openModal(element) {
+            const img = element.querySelector('img');
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            modalImg.src = img.src;
+            modal.style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>

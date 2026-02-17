@@ -1,0 +1,42 @@
+{
+  "mode": "H3",
+  "description": "Política H3 congelada para walk-forward Sep-Nov 2025",
+  "version": "1.0-frozen",
+  "frozen_date": "2025-11-04",
+  
+  "risk": {
+    "tp_pct": 0.065,
+    "sl_pct": 0.008,
+    "expiry_days": 4,
+    "cost_pct": 0.005
+  },
+  
+  "filters": {
+    "min_p_tp_sl": 0.70,
+    "min_ev_pct": 0.035,
+    "min_prob_win": 0.62,
+    "max_etth_days": 4.0,
+    "atr_min": 0.005,
+    "atr_max": 0.035
+  },
+  
+  "sizing": {
+    "max_open": 3,
+    "per_trade_cash": 400,
+    "max_total_capital": 1200,
+    "sector_max_dupes": 2,
+    "ticker_max_dupes": 1
+  },
+  
+  "execution": {
+    "first_touch": true,
+    "horizon_days": 3,
+    "force_close_at_expiry": true
+  },
+  
+  "notes": [
+    "Modelo entrenado hasta 2025-08",
+    "NO modificar durante walk-forward",
+    "Validación: Sep-Nov 2025 (out-of-sample)"
+  ]
+}

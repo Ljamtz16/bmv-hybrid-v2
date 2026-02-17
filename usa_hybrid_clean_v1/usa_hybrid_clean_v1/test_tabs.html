@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Pestañas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin: 20px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 16px 20px;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        .tab-btn:hover {
+            background: #efefef;
+        }
+        .tab-btn.active {
+            background: white;
+            color: #0084ff;
+            border-bottom-color: #0084ff;
+        }
+        .tab-content {
+            display: none;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .info {
+            padding: 15px;
+            background: #e7f3ff;
+            border-left: 4px solid #0084ff;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-section">
+        <h1>🔍 Test de Visualización de Pestañas</h1>
+        
+        <div class="status success" id="status">
+            ✅ Si puedes ver este mensaje, el navegador está funcionando correctamente
+        </div>
+        
+        <div class="info">
+            <strong>Instrucciones:</strong><br>
+            1. Si ves las pestañas abajo, el CSS está cargando bien<br>
+            2. Haz clic en cada pestaña para verificar que el JavaScript funciona<br>
+            3. Si funciona aquí pero no en el dashboard, limpia el cache (Ctrl+F5)
+        </div>
+        
+        <h2>Pestañas de Prueba:</h2>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab(0)">
+                <span style="font-size: 20px;">📊</span> Trade Monitor
+            </button>
+            <button class="tab-btn" onclick="switchTab(1)">
+                <span style="font-size: 20px;">⚖️</span> Plan Comparison
+            </button>
+            <button class="tab-btn" onclick="switchTab(2)">
+                <span style="font-size: 20px;">📋</span> Historial
+            </button>
+            <button class="tab-btn" onclick="switchTab(3)">
+                <span style="font-size: 20px;">📈</span> Reporte Historico
+            </button>
+        </div>
+        
+        <div class="tab-content active" id="tab0">
+            <h3>📊 Trade Monitor</h3>
+            <p>Esta es la pestaña de Trade Monitor. Aquí se muestran los trades activos.</p>
+            <div class="status success">✅ Pestaña Trade Monitor funcionando</div>
+        </div>
+        
+        <div class="tab-content" id="tab1">
+            <h3>⚖️ Plan Comparison</h3>
+            <p>Esta es la pestaña de comparación de planes STANDARD vs PROBWIN_55.</p>
+            <div class="status success">✅ Pestaña Plan Comparison funcionando</div>
+        </div>
+        
+        <div class="tab-content" id="tab2">
+            <h3>📋 Historial</h3>
+            <p>Esta es la pestaña de HISTORIAL. Aquí se muestran todos los trades cerrados.</p>
+            <div class="status success">✅ Pestaña Historial funcionando</div>
+        </div>
+        
+        <div class="tab-content" id="tab3">
+            <h3>📈 Reporte Historico</h3>
+            <p>Esta es la pestaña de REPORTE HISTÓRICO con análisis detallado de trades.</p>
+            <div class="status success">✅ Pestaña Reporte Historico funcionando</div>
+        </div>
+        
+        <div class="test-section" style="margin-top: 30px;">
+            <h3>Resultado del Test</h3>
+            <div id="result" class="status success">
+                <strong>✅ Todo funciona correctamente</strong><br>
+                Las pestañas se visualizan y cambian al hacer clic.
+            </div>
+            
+            <div class="info" style="margin-top: 20px;">
+                <strong>Si este test funciona pero el dashboard no:</strong><br>
+                1. Abre el dashboard: <a href="http://localhost:8050" target="_blank">http://localhost:8050</a><br>
+                2. Presiona Ctrl+Shift+R (Windows) o Cmd+Shift+R (Mac) para limpiar cache<br>
+                3. Si aún no funciona, presiona F12 y verifica la consola por errores
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function switchTab(index) {
+            // Remover active de todos los botones y contenidos
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Activar el botón y contenido seleccionado
+            document.querySelectorAll('.tab-btn')[index].classList.add('active');
+            document.getElementById('tab' + index).classList.add('active');
+            
+            console.log('Cambiado a pestaña:', index);
+        }
+        
+        // Log inicial
+        console.log('✅ Test de pestañas cargado correctamente');
+        console.log('Pestañas encontradas:', document.querySelectorAll('.tab-btn').length);
+    </script>
+</body>
+</html>

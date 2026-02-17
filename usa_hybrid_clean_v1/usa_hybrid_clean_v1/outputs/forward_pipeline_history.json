@@ -1,0 +1,102 @@
+[
+  {
+    "started_at": "2025-11-25T13:37:23Z",
+    "finished_at": "2025-11-25T13:46:57Z",
+    "returncode": 0,
+    "ok": true,
+    "recent_days": 3,
+    "max_open": 3,
+    "capital": 1000.0,
+    "send_telegram": false,
+    "relaxed": false,
+    "plan_path": "C:\\Users\\M3400WUAK-WA023W\\bmv_hybrid_clean_v3\\usa_hybrid_clean_v1\\usa_hybrid_clean_v1\\reports\\forecast\\2025-11\\trade_plan_tth.csv",
+    "summary": {
+      "date": "2025-11-24",
+      "n_signals": 18,
+      "top": [
+        {
+          "ticker": "PFE",
+          "prob_win": 0.6,
+          "etth": 2.619714768542248,
+          "p_tp_before_sl": 0.8928850889575622
+        },
+        {
+          "ticker": "XOM",
+          "prob_win": 0.48,
+          "etth": 2.506711308248489,
+          "p_tp_before_sl": 0.7829625259822934
+        },
+        {
+          "ticker": "JPM",
+          "prob_win": 0.455,
+          "etth": 2.3761773846664287,
+          "p_tp_before_sl": 0.797404591837423
+        },
+        {
+          "ticker": "CVX",
+          "prob_win": 0.45,
+          "etth": 2.5038900105415154,
+          "p_tp_before_sl": 0.8055404285132602
+        },
+        {
+          "ticker": "MSFT",
+          "prob_win": 0.435,
+          "etth": 2.273023317131499,
+          "p_tp_before_sl": 0.8106591273717633
+        },
+        {
+          "ticker": "SPY",
+          "prob_win": 0.425,
+          "etth": 2.535638064984047,
+          "p_tp_before_sl": 0.7906692979395614
+        },
+        {
+          "ticker": "AMZN",
+          "prob_win": 0.415,
+          "etth": 2.4381486596834816,
+          "p_tp_before_sl": 0.79837102586734
+        },
+        {
+          "ticker": "AMD",
+          "prob_win": 0.41,
+          "etth": 2.4901425324890885,
+          "p_tp_before_sl": 0.7977219882803092
+        },
+        {
+          "ticker": "NVDA",
+          "prob_win": 0.41,
+          "etth": 2.445388956474019,
+          "p_tp_before_sl": 0.7942404448848212
+        },
+        {
+          "ticker": "JNJ",
+          "prob_win": 0.38,
+          "etth": 2.030158065939939,
+          "p_tp_before_sl": 0.8896999479373003
+        }
+      ],
+      "stats": {
+        "prob_win_mean": 0.3716666666666667,
+        "prob_win_max": 0.6,
+        "etth_mean": 2.3470262826544213,
+        "p_tp_before_sl_mean": 0.8313079033725456
+      },
+      "month_dir": "C:\\Users\\M3400WUAK-WA023W\\bmv_hybrid_clean_v3\\usa_hybrid_clean_v1\\usa_hybrid_clean_v1\\reports\\forecast\\2025-11"
+    },
+    "report_md": "C:\\Users\\M3400WUAK-WA023W\\bmv_hybrid_clean_v3\\usa_hybrid_clean_v1\\usa_hybrid_clean_v1\\reports\\forecast\\2025-11\\forward_summary_2025-11-26.md",
+    "reason_empty_plan": null,
+    "stdout_tail": "Thresholds ajustados por health: {'low_vol': 0.59, 'med_vol': 0.61, 'high_vol': 0.64}\n[RISK] Calendario hoy: LOW | sin eventos relevantes\n[RISK] Ajustes aplicados -> risk=low: sin ajustes\n[INFO] Antes de dedupe: 13 señales\n[INFO] Después de dedupe: 13 señales únicas por ticker\n\n============================================================\n✅ Plan listo: val\\trade_plan.csv (1 señales)\n============================================================\nCapital disponible: $1000.00\nExposición total: $226.98 (22.7%)\nE[PnL] neto agregado (cash): $10.95\nE[PnL] neto agregado (%): 4.38%\nAvg P(win): 0.971\nAvg ETTH: 2.05 días\nRiesgo calendario: low\n\nExposición por sector:\n  Other: $226.98 (100.0%)\n\n[INFO] Auditoría completa: val\\trade_plan_audit.parquet\n============================================================\n\n[9/9]  Validando precios del plan...\n  Warning: No se pudo validar precios\n\n================================================\n PIPELINE COMPLETADO\n================================================\n\n Archivos generados:\n   reports\\forecast\\2025-11\\trade_plan_tth.csv\n   reports\\forecast\\2025-11\\trade_candidates_tth.csv\n   reports\\forecast\\2025-11\\trade_plan_tth_telegram.txt\n\n\nActualizando bitacora Excel...\n[DRIVE] Usando Google Drive: G:\\Mi unidad\\Trading proyecto\\H3_BITACORA_PREDICCIONES.xlsx\n[SKIP] Duplicado detectado para PFE 2025-11-25 BUY → saltando\n[OK] Prediccion anadida: WMT_20251125_074654\n[OK] 2 predicciones anadidas desde reports\\forecast\\2025-11\\trade_plan_tth.csv\n✅ Hoja de resumen actualizada\n   Total: 8 | Activas: 4 | Win Rate: 0.0%\n[DRIVE] Usando Google Drive: G:\\Mi unidad\\Trading proyecto\\H3_BITACORA_PREDICCIONES.xlsx\n[INFO] Fecha de precios: 2025-11-24\n[OK] Actualizadas 4 predicciones\n✅ Hoja de resumen actualizada\n   Total: 8 | Activas: 4 | Win Rate: 0.0%\n Bitacora actualizada\n\n Para monitorear trades activos, ejecuta:\npython scripts\\35_check_predictions_and_notify.py --log data\\trading\\predictions_log.csv --daily data\\us\\ohlcv_us_daily.csv --notify TP_SL_ONLY\n\n",
+    "stderr_tail": "ts. Use at your own risk. For more info please refer to:\nhttps://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations\n  warnings.warn(\nC:\\Users\\M3400WUAK-WA023W\\AppData\\Roaming\\Python\\Python312\\site-packages\\sklearn\\base.py:442: InconsistentVersionWarning: Trying to unpickle estimator RandomForestClassifier from version 1.7.2 when using version 1.7.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:\nhttps://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations\n  warnings.warn(\nTraceback (most recent call last):\n  File \"C:\\Users\\M3400WUAK-WA023W\\AppData\\Roaming\\Python\\Python312\\site-packages\\pandas\\core\\indexes\\base.py\", line 3805, in get_loc\n    return self._engine.get_loc(casted_key)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"index.pyx\", line 167, in pandas._libs.index.IndexEngine.get_loc\n  File \"index.pyx\", line 196, in pandas._libs.index.IndexEngine.get_loc\n  File \"pandas\\\\_libs\\\\hashtable_class_helper.pxi\", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item\n  File \"pandas\\\\_libs\\\\hashtable_class_helper.pxi\", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item\nKeyError: 'date'\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\M3400WUAK-WA023W\\bmv_hybrid_clean_v3\\usa_hybrid_clean_v1\\usa_hybrid_clean_v1\\validate_plan_prices.py\", line 5, in <module>\n    plan['date'] = pd.to_datetime(plan['date'], errors='coerce')\n                                  ~~~~^^^^^^^^\n  File \"C:\\Users\\M3400WUAK-WA023W\\AppData\\Roaming\\Python\\Python312\\site-packages\\pandas\\core\\frame.py\", line 4102, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\M3400WUAK-WA023W\\AppData\\Roaming\\Python\\Python312\\site-packages\\pandas\\core\\indexes\\base.py\", line 3812, in get_loc\n    raise KeyError(key) from err\nKeyError: 'date'\n",
+    "daily_step": {
+      "name": "daily_pipeline",
+      "started_at": "2025-11-25T13:36:38Z",
+      "finished_at": "2025-11-25T13:37:23Z",
+      "ok": true,
+      "returncode": 0,
+      "duration_seconds": 45.0,
+      "stdout_tail": "checks...\n[INFO] Running daily health checks for 2025-11-25...\n\n============================================================\nHEALTH CHECK SUMMARY - 2025-11-25\n============================================================\nStatus: PASS\nTotal Alerts: 7 (Errors: 0, Warnings: 6)\n\nAlerts:\n  ⚠️ [INFO] No targets available for quality metrics (forward-looking mode)\n  ⚠️ [WARNING] Coverage 0.1% < 15% - Too restrictive gates\n  ⚠️ [WARNING] Regime bias: high_vol represents 61.5% of signals\n  ⚠️ [WARNING] Feature drift in ret_1d: PSI=1.380 > 0.2\n  ⚠️ [WARNING] Feature drift in vol_20d: PSI=0.724 > 0.2\n  ⚠️ [WARNING] Feature drift in atr_14d: PSI=0.452 > 0.2\n  ⚠️ [WARNING] Feature drift in pos_in_range_20d: PSI=0.416 > 0.2\n\nFull report: reports\\health\\daily_health_2025-11-25.json\n============================================================\n\n\n[5/6] Validation...\n[TEST] Forward-looking validation para T-1=2025-11-24\n[INFO] Running with --allow-stale (permite datos 1-2 días atrás)\n============================================================\n[WARN] | CSV Freshness        | CSV max(date_NY)=2025-11-23, esperado 2025-11-24 (1 days behind)\n[WARN] | Features Freshness   | Features max(timestamp_NY)=2025-11-23, esperado 2025-11-24 (1 days behind)\n[PASS] | Signals Purity       | Signals purity: 13 filas, todas de 2025-11-24\n[PASS] | Coherence (<3%)      | Coherence OK: max_diff=0.00% < 3.0%\n[PASS] | Traceability         | Traceability OK: 6 campos presentes\n============================================================\n[PASS] 5/5 validaciones exitosas (2 warnings)\n\n[OK] All validations passed\n\n[6/6] Creating snapshot...\n[SNAPSHOT] 5 files saved to: C:\\Users\\M3400WUAK-WA023W\\bmv_hybrid_clean_v3\\usa_hybrid_clean_v1\\usa_hybrid_clean_v1\\snapshots\\2025-11-25\n\n========================================\nPipeline COMPLETED\nSnapshot: C:\\Users\\M3400WUAK-WA023W\\bmv_hybrid_clean_v3\\usa_hybrid_clean_v1\\usa_hybrid_clean_v1\\snapshots\\2025-11-25\n========================================\n\n[UNLOCK] Lock removed\n",
+      "stderr_tail": "\n[                       0%                       ]\n[*****                 11%                       ]  2 of 18 completed\n[********              17%                       ]  3 of 18 completed\n[***********           22%                       ]  4 of 18 completed\n[*************         28%                       ]  5 of 18 completed\n[****************      33%                       ]  6 of 18 completed\n[*******************   39%                       ]  7 of 18 completed\n[********************* 44%                       ]  8 of 18 completed\n[**********************50%                       ]  9 of 18 completed\n[**********************56%**                     ]  10 of 18 completed\n[**********************61%****                   ]  11 of 18 completed\n[**********************67%*******                ]  12 of 18 completed\n[**********************72%**********             ]  13 of 18 completed\n[**********************78%************           ]  14 of 18 completed\n[**********************83%***************        ]  15 of 18 completed\n[**********************89%******************     ]  16 of 18 completed\n[**********************94%********************   ]  17 of 18 completed\n[*********************100%***********************]  18 of 18 completed\n"
+    },
+    "run_daily_first": true
+  }
+]

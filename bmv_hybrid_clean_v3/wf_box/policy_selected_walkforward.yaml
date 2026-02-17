@@ -1,0 +1,11 @@
+# reports/forecast/policy_selected_walkforward.yaml
+defaults:
+  long_only: true
+  capital_initial: 10000
+  fixed_cash_per_trade: 2000
+  commission_side: 5
+policy:
+  "2025-01": {tp_pct: 0.06, sl_pct: 0.025, horizon_days: 5, min_abs_y: 0.045}
+  "2025-02": {tp_pct: 0.08, sl_pct: 0.010, horizon_days: 3, min_abs_y: 0.060}
+  "2025-03": {tp_pct: 0.03, sl_pct: 0.010, horizon_days: 2, min_abs_y: 0.075}
+  "2025-04": {tp_pct: 0.06, sl_pct: 0.015, horizon_days: 5, min_abs_y: 0.040}

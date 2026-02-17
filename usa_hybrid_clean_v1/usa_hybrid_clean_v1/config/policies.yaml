@@ -1,0 +1,37 @@
+# Policy config for USA Hybrid Clean V2 - Baseline-Calibrated-Q4-2025
+metadata:
+  name: Baseline-Calibrated-Q4-2025
+  created: 2025-11-11
+  notes: Calibrated ensemble (temperature + isotonic/platt blend) on adaptive ATR% 2d targets.
+
+risk:
+  capital_max: 100000        # total capital ceiling
+  max_open_positions: 15     # simultaneous positions limit
+  cooldown_days_same_ticker: 2
+  per_ticker_cap: 5000       # max capital exposure per ticker
+  per_trade_cash: 2500       # nominal allocation per trade candidate
+  stop_loss_pct_default: 0.02
+  take_profit_pct_default: 0.10
+
+thresholds:
+  prob_threshold:            # calibrated probability minimum per regime
+    low_vol: 0.60
+    med_vol: 0.62
+    high_vol: 0.65
+  etth_max_minutes:          # placeholder until ETTH model ready
+    low_vol: 120
+    med_vol: 90
+    high_vol: 60
+
+monitoring:
+  brier_max: 0.14
+  ece_max: 0.05
+  lift_top_decile_min: 1.40
+  coverage_target_min: 0.15
+  coverage_target_max: 0.25
+
+gates:
+  min_prob_win_global: 0.60
+  discard_if_etth_missing: false
+  cap_prob_upper: 0.98
+  cap_prob_lower: 0.02

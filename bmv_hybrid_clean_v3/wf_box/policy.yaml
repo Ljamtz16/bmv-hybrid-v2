@@ -1,0 +1,18 @@
+defaults:
+  tp_pct: 0.03
+  sl_pct: 0.025
+  min_abs_y: 0.04
+  horizon_days: 5
+  long_only: true
+
+regime_overrides:
+  choppy:
+    min_abs_y: 0.045
+    horizon_days: 3
+
+banlist:
+  - OMAB.MX
+  - GRUMAB.MX
+  - FEMSAUBD.MX
+  - PE&OLES.MX
+  - TLEVISACPO.MX

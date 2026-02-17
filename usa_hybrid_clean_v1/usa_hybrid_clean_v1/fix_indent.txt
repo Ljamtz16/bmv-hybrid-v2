@@ -1,0 +1,17 @@
+# Líneas 48-63 corregidas
+    ap.add_argument("--etth-max", type=float, help="ETTH máximo en días")
+    ap.add_argument("--capital-max", type=float, help="Capital total máximo")
+    # Flags para ensure-one (fallback controlado)
+    ap.add_argument("--ensure-one", action="store_true",
+                    help="Si no hay trades tras filtros, forzar 1 trade en modo fallback.")
+    ap.add_argument("--ensure-exposure-max", type=float, default=650.0,
+                    help="Exposure máximo en USD para el trade forzado (sin mínimo).")
+    ap.add_argument("--fallback-prob-min", type=float, default=0.20,
+                    help="Umbral de prob_win mínimo en fallback.")
+    ap.add_argument("--fallback-ptpmin", type=float, default=0.15,
+                    help="Umbral de P(TP<SL) mínimo en fallback.")
+    ap.add_argument("--fallback-etth-max", type=float, default=0.30,
+                    help="ETTH máximo (días) en fallback.")
+    ap.add_argument("--fallback-cost", type=float, default=0.0003,
+                    help="Costo para E[PnL] en fallback (paper).")
+    return ap.parse_args()

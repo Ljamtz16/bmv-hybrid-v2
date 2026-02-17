@@ -1,0 +1,15 @@
+{
+  "name": "v1_productiva_static_gate",
+  "tickers": ["CVX", "XOM", "PFE", "NVDA"],
+  "tp_pct": 0.016,
+  "sl_pct": 0.010,
+  "max_hold_days": 2,
+  "exposure_cap_ratio": 0.8,
+  "execution_mode": "balanced",
+  "notes": [
+    "No modificar: versión congelada v1 productiva",
+    "Usar capital base $1000 y exposure 70-80%",
+    "Gate estático mensual (sin rotación)",
+    "Parametría Monte Carlo ya validada en Q1 2025 (+8.93%)"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "total_trades": 29,
+  "valid_trades": 25,
+  "pnl_total": 63.960357142857326,
+  "pnl_wins": 125.00971428571447,
+  "pnl_losses": -61.04935714285713,
+  "pf": 2.0476827297818776,
+  "wr": 68.0,
+  "max_dd": -33.56892857142853,
+  "avg_pnl": 2.558414285714293,
+  "avg_bars_held": 2.88,
+  "exit_breakdown": {
+    "TP": 17,
+    "SL": 8,
+    "TIMEOUT": 4
+  }
+}

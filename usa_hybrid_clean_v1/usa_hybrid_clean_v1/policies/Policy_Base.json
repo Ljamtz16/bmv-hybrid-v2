@@ -1,0 +1,26 @@
+{
+  "version": "2.0",
+  "direction_strategy": "auto",
+  "short_enable": true,
+
+  "gate_threshold": 0.57,
+  "min_prob": 0.56,
+  "min_abs_yhat": 0.05,
+
+  "tp_pct": 0.06,
+  "sl_pct": 0.0015,
+  "horizon_days": 3,
+  "horizon_dynamic_atr": true,
+  "horizon_days_high_atr": 4,
+
+  "per_trade_cash": 200.0,
+  "max_open": 5,
+  "max_open_per_sector": 3,
+  "cooldown_days": 0,
+
+  "mc_score_min": 0.0,
+  "sector_caps": { "tech": 0.70, "defensive": 0.40, "financials": 0.40, "energy": 0.30 },
+
+  "capital_hard_cap": 1000,
+  "notes": "Base USA Hybrid Clean V2. Guardrails: 2<=max_open<=5 y per_trade_cash*max_open<=1000. Autotune target 10-15 trades; runner fallback forza 0.54/0.05/gate 0.56 si trades<10."
+}

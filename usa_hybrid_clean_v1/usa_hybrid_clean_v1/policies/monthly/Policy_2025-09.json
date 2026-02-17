@@ -1,0 +1,8 @@
+﻿{
+    "min_abs_yhat":  0.04,
+    "min_prob":  0.52,
+    "gate_threshold":  0.56,
+    "per_trade_cash":  400,
+    "month":  "2025-09",
+    "max_open":  7
+}

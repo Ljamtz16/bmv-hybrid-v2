@@ -1,0 +1,2 @@
+trade_id,idea_id,ticker,side,entry,tp_price,sl_price,qty,plan_type,entry_time,generated_at,etth_days_raw
+STD-JPM-BUY-305.1900,JPM-BUY-305.1900,JPM,BUY,305.19000244140625,310.0730424804688,302.1381024169922,1.0,STANDARD,2026-02-02T08:55:18.032629,2026-02-02T08:55:18.032629,

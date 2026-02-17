@@ -1,0 +1,42 @@
+{
+  "run_timestamp": "2026-02-11T06:27:54.189668Z",
+  "python_version": "3.12.6",
+  "repo_root": "C:\\Users\\M3400WUAK-WA023W\\bmv_hybrid_clean_v3\\Intradia",
+  "data_path": "C:\\Users\\M3400WUAK-WA023W\\bmv_hybrid_clean_v3\\Intradia\\data\\us\\intraday_15m\\consolidated_15m.parquet",
+  "params": {
+    "capital_initial": 2000.0,
+    "risk_per_trade": 0.0075,
+    "max_open": 2,
+    "daily_stop_R": -2.0,
+    "atr_window": 14,
+    "sl_mult": 1.0,
+    "tp_mult": 1.5,
+    "tie_break_rule": "first_signal"
+  },
+  "filters": {
+    "core_tickers": [
+      "JPM",
+      "CAT",
+      "QQQ",
+      "GS",
+      "SPY"
+    ],
+    "allowed_hours_ny": [
+      "09:30-11:30",
+      "15:00-16:00"
+    ]
+  },
+  "counts": {
+    "signals_generated": 6152,
+    "trades_allowed": 2188,
+    "trades_blocked": 3964
+  },
+  "output_paths": {
+    "trades": "C:\\Users\\M3400WUAK-WA023W\\bmv_hybrid_clean_v3\\Intradia\\intraday_v2\\artifacts\\baseline_v1\\trades.csv",
+    "blocked_trades": "C:\\Users\\M3400WUAK-WA023W\\bmv_hybrid_clean_v3\\Intradia\\intraday_v2\\artifacts\\baseline_v1\\blocked_trades.csv",
+    "equity_daily": "C:\\Users\\M3400WUAK-WA023W\\bmv_hybrid_clean_v3\\Intradia\\intraday_v2\\artifacts\\baseline_v1\\equity_daily.csv",
+    "monthly_table": "C:\\Users\\M3400WUAK-WA023W\\bmv_hybrid_clean_v3\\Intradia\\intraday_v2\\artifacts\\baseline_v1\\monthly_table.csv",
+    "summary_ticker_year_hour": "C:\\Users\\M3400WUAK-WA023W\\bmv_hybrid_clean_v3\\Intradia\\intraday_v2\\artifacts\\baseline_v1\\summary_ticker_year_hour.csv"
+  },
+  "git_commit": null
+}

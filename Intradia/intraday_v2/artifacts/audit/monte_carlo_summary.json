@@ -1,0 +1,15 @@
+{
+  "simulations": 10000,
+  "trades_sampled": 97,
+  "probability_of_ruin_pct": 0.0,
+  "final_equity_distribution": {
+    "percentile_5": 2.432117873112537,
+    "mean": 2.7402803389204657,
+    "median": 2.73256367466242,
+    "percentile_95": 3.070124321946903
+  },
+  "drawdown": {
+    "mean_max_dd_pct": -63.41904289859339
+  },
+  "verdict": "GREEN"
+}

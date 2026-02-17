@@ -1,0 +1,186 @@
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                                                                           ║
+║  🎯 RESUMEN: Setup Robusto v2 para Raspberry Pi (Production-Ready)       ║
+║                                                                           ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+
+📦 ARCHIVOS NUEVOS (MEJORADOS)
+═══════════════════════════════════════════════════════════════════════════
+
+✅ setup_rpi_v2.sh
+   └─ Instalación profesional: pre-requisitos apt, estructura runtime, 
+      servicios systemd blindados, health check integrado
+
+✅ dashboard_app_v2.py
+   └─ Dashboard ligero en gunicorn: cache 15s, /health endpoint, 
+      telemetría (CPU/RAM/temp), logging estructurado
+
+✅ runtime_env_template.txt
+   └─ Configuración centralizada: BVM_RUNTIME, TZ, timers, 
+      límites de recursos, credenciales, retención
+
+
+🏗️ ARQUITECTURA
+═══════════════════════════════════════════════════════════════════════════
+
+~/bmv_hybrid_clean_v3/         (CÓDIGO - estático, versionado)
+  ├─ setup_rpi_v2.sh
+  ├─ scripts/
+  ├─ src/
+  └─ models/
+
+~/bmv_runtime/                 (DATOS - volátil, crece)
+  ├─ data/raw/1d, 1h
+  ├─ reports/paper_trading/
+  ├─ logs/                     (max 100MB, rotados)
+  ├─ state/                    (lock_daily, last_run.json)
+  └─ config/runtime.env        (centralizado, chmod 600)
+
+
+⏰ AUTOMATIZACIÓN
+═══════════════════════════════════════════════════════════════════════════
+
+06:00 (Diarios)
+  → paper_run_daily.py
+  → Genera: trades.csv, signals.csv, last_run.json
+  ✓ Lock para evitar doble ejecución
+  ✓ Timeout 30 min para descargas
+
+09:30-16:30 (L-V)
+  → monitor_forecast_live.py
+  → Actualiza: bitacora_intraday.csv, active_positions.json
+
+24/7 (Continuo)
+  → Dashboard en port 5000
+  → Health check: CPU, RAM, disk, temp
+
+
+🔧 BLINDAJES (Production)
+═══════════════════════════════════════════════════════════════════════════
+
+✓ Doble ejecución        → Lock file + flock
+✓ Tareas lentas          → TimeoutStartSec=1800
+✓ RPi apagada            → Persistent=true (reejecutar al prender)
+✓ Dashboard cae          → Restart=always + RestartSec=10
+✓ Memoria descontrolada  → MemoryLimit=768M (mata proceso)
+✓ CPU disparada          → CPUQuota=80% (limita a 80%)
+✓ Disco lleno            → Retención 90 días automática
+✓ Logs sin control       → Rotación cada 100MB
+✓ Temperaturas altas     → Alertas si > 75°C
+✓ Auditoría              → last_run.json + logs detallados
+
+
+🚀 INSTALACIÓN (3 PASOS)
+═══════════════════════════════════════════════════════════════════════════
+
+1. Desktop (Windows)
+   ─────────────────────
+   cd bmv_hybrid_clean_v3
+   bash sync_to_rpi.sh pi 192.168.1.100
+
+2. RPi Terminal
+   ─────────────────────
+   ssh pi@192.168.1.100
+   cd ~/bmv_hybrid_clean_v3
+   bash setup_rpi_v2.sh
+
+   (Espera ~15-20 min)
+
+3. Validar & Activar
+   ─────────────────────
+   python validate_rpi_setup.py
+   sudo systemctl enable bmv-dashboard.service
+   sudo systemctl start bmv-dashboard.service
+
+   🎉 ¡LISTO!
+
+
+📊 DASHBOARD
+═══════════════════════════════════════════════════════════════════════════
+
+Acceso: http://192.168.1.100:5000
+
+Endpoints:
+  /health               → CPU, RAM, disk, temp, last_run
+  /api/positions        → Posiciones activas
+  /api/equity           → Curva de capital
+  /api/trades/latest    → Últimos 20 trades
+  /api/status           → Status general
+
+
+📋 VALIDACIÓN
+═══════════════════════════════════════════════════════════════════════════
+
+python validate_rpi_setup.py
+
+✓ Python 3.10+
+✓ Virtual environment
+✓ Imports críticos (pandas, flask, sklearn)
+✓ BVM_RUNTIME existe
+✓ Permisos R/W en logs/
+✓ Reporte dummy generado
+✓ Dashboard responde localmente
+✓ Servicios systemd existen
+✓ Systemd enabled/active
+✓ Recursos OK (CPU temp, RAM, disk)
+
+
+📈 MONITOREO EN VIVO
+═══════════════════════════════════════════════════════════════════════════
+
+Ver logs en vivo:
+  journalctl -u bmv-dashboard -f
+  journalctl -u bmv-daily-tasks -f
+
+Ver timers próximos:
+  sudo systemctl list-timers
+
+Salud del sistema:
+  curl http://localhost:5000/health | jq
+
+
+🔑 CAMBIOS CLAVE vs v1
+═══════════════════════════════════════════════════════════════════════════
+
+Paths           → Relativos → BVM_RUNTIME centralizado
+Config          → Hardcodeada → runtime.env parametrizable
+Logging         → journalctl solo → journalctl + archivos
+Dashboard       → Flask dev → Gunicorn production
+Cache           → Ninguno → 15 seg (menos carga)
+Health          → Manual → /health endpoint automático
+Locks           → Ninguno → state/lock_daily
+Retry           → Manual → systemd restart automático
+Permisos        → Default → chmod 600 en secrets
+Telemetría      → Manual → psutil integrado
+
+
+✨ BENEFICIOS
+═══════════════════════════════════════════════════════════════════════════
+
+✓ Setup una sola vez (setup_rpi_v2.sh hace TODO)
+✓ Configuración centralizada (runtime.env)
+✓ Automático 24/7 (systemd blindado)
+✓ Monitoreable (dashboard + health endpoint)
+✓ Robusto (locks, retries, límites de recursos)
+✓ Loggeable (todo se registra)
+✓ Escalable (estructura separada código vs datos)
+✓ Professional (production-ready)
+
+
+📞 ARCHIVOS DE REFERENCIA
+═══════════════════════════════════════════════════════════════════════════
+
+PRO_SETUP_GUIDE.md      → Documento completo (lo más importante)
+QUICK_START_RPI.md      → Guía rápida 3 pasos
+INSTALL_RPI.md          → Manual paso a paso
+ARCHITECTURE.md         → Flujo completo y conceptos
+
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                                                                           ║
+║  🎉 Tu Raspberry Pi estará lista para producción 24/7                    ║
+║                                                                           ║
+║     bash setup_rpi_v2.sh  →  ¡Automático y blindado!                     ║
+║                                                                           ║
+╚═══════════════════════════════════════════════════════════════════════════╝

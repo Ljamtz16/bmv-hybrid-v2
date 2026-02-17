@@ -1,0 +1,67 @@
+═══════════════════════════════════════════════════════════════════════════
+                   GARANTÍA DE CONSISTENCIA COMPLETADA
+═══════════════════════════════════════════════════════════════════════════
+
+✅ PROBLEMA RESUELTO
+   Definición única de "operable" = Conf>=4 AND Risk<=MEDIUM AND Whitelist
+   
+✅ NÚMERO DE REFERENCIA
+   Operables en dataset: 3,881
+   
+✅ 3 ARCHIVOS DE GARANTÍA
+   1. OPERABILITY_DEFINITION.md .............. Definición oficial
+   2. SCRIPT_VALIDATION_CHECKLIST.md ........ Guía para nuevos scripts
+   3. validate_operability_consistency.py ... Validador automático
+
+✅ 2 SCRIPTS CORREGIDOS
+   1. enhanced_metrics_reporter.py .......... Aplicado 3 filtros
+   2. backtest_confidence_rules.py .......... Agregado Risk + Whitelist
+
+✅ PROCESO DE VALIDACIÓN
+   paso 1: Lee SCRIPT_VALIDATION_CHECKLIST.md
+   paso 2: Copia plantilla del archivo
+   paso 3: Adapta tu lógica
+   paso 4: Ejecuta validate_operability_consistency.py
+   paso 5: ¿Ves 3,881? → ✅ Correcto
+
+═══════════════════════════════════════════════════════════════════════════
+                    TABLA DE REFERENCIA RÁPIDA
+═══════════════════════════════════════════════════════════════════════════
+
+CONTEO ESPERADO POR FILTRO:
+  26,637 .. Total dataset
+  10,384 .. Conf >= 4 (39.0%)
+  10,364 .. + Risk <= MEDIUM (38.9%)
+   3,881 .. + Whitelist (14.6%) ← REFERENCIA
+
+SI TU SCRIPT MUESTRA:
+  ✅ 3,881 → CORRECTO (3 filtros aplicados)
+  ❌ 10,000+ → INCORRECTO (falta Risk o Whitelist)
+  ❌ 26,000+ → INCORRECTO (sin filtros)
+
+═══════════════════════════════════════════════════════════════════════════
+                      PRÓXIMOS PASOS
+═══════════════════════════════════════════════════════════════════════════
+
+1. GUARDAR ESTOS ARCHIVOS COMO REFERENCIA
+   ✓ OPERABILITY_DEFINITION.md
+   ✓ SCRIPT_VALIDATION_CHECKLIST.md
+   ✓ CONSISTENCY_GUARANTEE.md
+   ✓ CONSISTENCY_CORRECTIONS_SUMMARY.md
+
+2. CUANDO ESCRIBAS NUEVO SCRIPT
+   ✓ Lee SCRIPT_VALIDATION_CHECKLIST.md
+   ✓ Copia plantilla
+   ✓ Ejecuta validate_operability_consistency.py
+   
+3. SI VES CONTRADICCIÓN EN ANÁLISIS
+   ✓ Ejecuta validate_operability_consistency.py
+   ✓ Busca diferencias en filtros
+
+═══════════════════════════════════════════════════════════════════════════
+                       CONSISTENCIA TOTAL: ✅
+═══════════════════════════════════════════════════════════════════════════
+
+Fecha: 2026-01-13
+Versión: 1.0 (Estable)
+Status: Completado

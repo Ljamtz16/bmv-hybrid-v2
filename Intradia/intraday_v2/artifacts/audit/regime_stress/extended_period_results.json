@@ -1,0 +1,22 @@
+{
+  "test_window": {
+    "start": "2015-01-01",
+    "end": "2020-12-31"
+  },
+  "frozen_model": {
+    "train_window": {
+      "start": "2020-01-01",
+      "end": "2025-06-30"
+    },
+    "calibrated": true,
+    "auc": 0.9870365546583312,
+    "metrics": {
+      "trades": 2,
+      "wr": 1.0,
+      "pf": 0.0,
+      "mean_r": 1.3333333333333321,
+      "max_dd": 0.0
+    }
+  },
+  "refit_model": null
+}

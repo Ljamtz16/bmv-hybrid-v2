@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Botones Monitor y Clean</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #1a1a1a; color: #fff; }
+    button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    pre { background: #000; padding: 10px; max-height: 200px; overflow: auto; }
+    .status { margin: 10px 0; padding: 10px; background: #333; }
+  </style>
+</head>
+<body>
+  <h1>Test Panel de Control</h1>
+  
+  <div class="status">
+    <h2>Monitor Intradía</h2>
+    <input id="interval" type="number" value="300" />
+    <button onclick="startMonitor()">▶ Iniciar Monitor</button>
+    <button onclick="stopMonitor()">■ Detener Monitor</button>
+    <button onclick="checkStatus()">🔍 Ver Estado</button>
+    <p id="monitor-status"></p>
+  </div>
+
+  <div class="status">
+    <h2>Limpieza Workspace</h2>
+    <button onclick="cleanDryRun()">🧪 Soft Clean (DryRun)</button>
+    <button onclick="cleanReal()">🧹 Soft Clean (Real)</button>
+    <pre id="clean-output"></pre>
+  </div>
+
+  <script>
+    const API_BASE = 'http://127.0.0.1:5001/api';
+
+    async function callApi(path, options = {}) {
+      const response = await fetch(`${API_BASE}${path}`, {
+        headers: { 'Content-Type': 'application/json' },
+        ...options
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return await response.json();
+    }
+
+    async function startMonitor() {
+      try {
+        const interval = parseInt(document.getElementById('interval').value, 10);
+        const data = await callApi('/monitor/start', {
+          method: 'POST',
+          body: JSON.stringify({ interval_seconds: interval })
+        });
+        alert(data.message || 'Monitor iniciado');
+        checkStatus();
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+
+    async function stopMonitor() {
+      try {
+        const data = await callApi('/monitor/stop', { method: 'POST' });
+        alert(data.message || 'Monitor detenido');
+        checkStatus();
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+
+    async function checkStatus() {
+      try {
+        const data = await callApi('/status', { method: 'GET' });
+        const running = data.monitor?.running;
+        const pid = data.monitor?.pid;
+        const interval = data.monitor?.interval_seconds;
+        document.getElementById('monitor-status').textContent = 
+          `Estado: ${running ? 'RUNNING' : 'STOPPED'} | PID: ${pid || 'N/A'} | Interval: ${interval || 'N/A'}s`;
+      } catch (err) {
+        document.getElementById('monitor-status').textContent = 'Error: ' + err.message;
+      }
+    }
+
+    async function cleanDryRun() {
+      const output = document.getElementById('clean-output');
+      output.textContent = 'Ejecutando Soft Clean (DryRun)...\n';
+      try {
+        const data = await callApi('/clean/soft', {
+          method: 'POST',
+          body: JSON.stringify({ dry_run: true })
+        });
+        output.textContent = data.stdout || '(sin salida)';
+      } catch (err) {
+        output.textContent = 'Error: ' + err.message;
+      }
+    }
+
+    async function cleanReal() {
+      if (!confirm('¿Seguro que quieres ejecutar Soft Clean (REAL)?')) return;
+      const output = document.getElementById('clean-output');
+      output.textContent = 'Ejecutando Soft Clean (Real)...\n';
+      try {
+        const data = await callApi('/clean/soft', {
+          method: 'POST',
+          body: JSON.stringify({ dry_run: false })
+        });
+        output.textContent = data.stdout || '(sin salida)';
+      } catch (err) {
+        output.textContent = 'Error: ' + err.message;
+      }
+    }
+
+    // Cargar estado inicial
+    checkStatus();
+    setInterval(checkStatus, 15000);
+  </script>
+</body>
+</html>

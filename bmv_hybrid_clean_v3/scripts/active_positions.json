@@ -1,0 +1,118 @@
+{
+  "FEMSAUBD_20250801_142306": {
+    "id": "FEMSAUBD_20250801_142306",
+    "ticker": "FEMSAUBD",
+    "signal": "BUY",
+    "entry_price": 168.07000732421875,
+    "tp": 178.76,
+    "sl": 160.94,
+    "position_size": 21,
+    "investment": 3529.4701538085938,
+    "entry_time": "2025-08-01T14:23:06.659606",
+    "confluences": [
+      "LSTM alcista",
+      "RSI sobreventa",
+      "MACD bajista",
+      "Volumen alto"
+    ],
+    "status": "CLOSED",
+    "exit_price": 159.8000030517578,
+    "exit_time": "2025-08-13T23:49:36.601158",
+    "pnl": -173.6700897216797,
+    "result": "SL_HIT"
+  },
+  "TLEVISACPO_20250801_142307": {
+    "id": "TLEVISACPO_20250801_142307",
+    "ticker": "TLEVISACPO",
+    "signal": "BUY",
+    "entry_price": 10.15999984741211,
+    "tp": 11.29,
+    "sl": 9.41,
+    "position_size": 200,
+    "investment": 2031.9999694824219,
+    "entry_time": "2025-08-01T14:23:07.493764",
+    "confluences": [
+      "LSTM alcista",
+      "RSI sobrecompra",
+      "MACD alcista"
+    ],
+    "status": "CLOSED",
+    "exit_price": 9.399999618530273,
+    "exit_time": "2025-08-05T09:20:33.569625",
+    "pnl": -152.0000457763672,
+    "result": "SL_HIT"
+  },
+  "CEMEXCPO_20250801_142308": {
+    "id": "CEMEXCPO_20250801_142308",
+    "ticker": "CEMEXCPO",
+    "signal": "BUY",
+    "entry_price": 15.84000015258789,
+    "tp": 16.98,
+    "sl": 15.08,
+    "position_size": 197,
+    "investment": 3120.4800300598145,
+    "entry_time": "2025-08-01T14:23:08.161532",
+    "confluences": [
+      "LSTM alcista",
+      "RSI sobrecompra",
+      "MACD alcista"
+    ],
+    "status": "CLOSED",
+    "exit_price": 16.989999771118164,
+    "exit_time": "2025-08-29T09:47:08.336841",
+    "pnl": 226.54992485046387,
+    "result": "TP_HIT"
+  },
+  "ALSEA_20250806_000504": {
+    "id": "ALSEA_20250806_000504",
+    "ticker": "ALSEA",
+    "signal": "BUY",
+    "entry_price": 55.72999954223633,
+    "tp": 60.49,
+    "sl": 52.56,
+    "position_size": 47,
+    "investment": 2619.3099784851074,
+    "entry_time": "2025-08-06T00:05:04.318954",
+    "confluences": [
+      "LSTM alcista",
+      "RSI sobrecompra",
+      "MACD alcista"
+    ],
+    "status": "close"
+  },
+  "BIMBOA_20250813_234940": {
+    "id": "BIMBOA_20250813_234940",
+    "ticker": "BIMBOA",
+    "signal": "BUY",
+    "entry_price": 55.59000015258789,
+    "tp": 59.39,
+    "sl": 53.06,
+    "position_size": 59,
+    "investment": 3279.8100090026855,
+    "entry_time": "2025-08-13T23:49:40.390064",
+    "confluences": [
+      "LSTM alcista",
+      "RSI sobrecompra",
+      "MACD alcista",
+      "Volumen alto"
+    ],
+    "status": "close"
+  },
+  "TLEVISACPO_20250829_094712": {
+    "id": "TLEVISACPO_20250829_094712",
+    "ticker": "TLEVISACPO",
+    "signal": "BUY",
+    "entry_price": 10.1899995803833,
+    "tp": 11.09,
+    "sl": 9.59,
+    "position_size": 250,
+    "investment": 2547.499895095825,
+    "entry_time": "2025-08-29T09:47:12.251487",
+    "confluences": [
+      "LSTM alcista",
+      "RSI sobrecompra",
+      "MACD alcista"
+    ],
+    "status": "close"
+  }
+}

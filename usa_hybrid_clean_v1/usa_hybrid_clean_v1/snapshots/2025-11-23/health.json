@@ -1,0 +1,65 @@
+{
+  "date": "2025-11-23",
+  "timestamp": "2025-11-23T23:39:46.748278",
+  "metrics": {
+    "quality": {
+      "brier": null,
+      "ece": null
+    },
+    "coverage": {
+      "signals_count": 6,
+      "total_features": 10463,
+      "coverage_pct": 0.05734492975246105
+    },
+    "regime": {
+      "regime_distribution": {
+        "med_vol": 50.0,
+        "high_vol": 33.33333333333333,
+        "low_vol": 16.666666666666664
+      },
+      "regime_counts": {
+        "med_vol": 3,
+        "high_vol": 2,
+        "low_vol": 1
+      }
+    },
+    "concentration": {
+      "unique_tickers": 6,
+      "top5_concentration_pct": 83.33333333333334,
+      "top5_tickers": {
+        "AAPL": 1,
+        "IWM": 1,
+        "WMT": 1,
+        "CAT": 1,
+        "PFE": 1
+      }
+    },
+    "drift": {
+      "feature_drift": {}
+    }
+  },
+  "alerts": [
+    {
+      "level": "info",
+      "message": "No targets available for quality metrics (forward-looking mode)"
+    },
+    {
+      "level": "error",
+      "message": "Only 6 signals - below minimum 10"
+    },
+    {
+      "level": "warning",
+      "message": "Coverage 0.1% < 15% - Too restrictive gates"
+    },
+    {
+      "level": "warning",
+      "message": "Top 5 tickers represent 83.3% of signals - High concentration risk"
+    }
+  ],
+  "summary": {
+    "total_alerts": 4,
+    "errors": 1,
+    "warnings": 2,
+    "status": "FAIL"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "uptime_s": 33015.5,
+  "last_tick_utc": "2025-11-25T13:28:43.858624+00:00",
+  "last_run_utc": "2025-11-25T13:28:43.858624+00:00",
+  "buffers_dir_exists": true,
+  "updated_positions": 2,
+  "tp_hits": 0,
+  "sl_hits": 0,
+  "last_save_ts": 1764077323.770093,
+  "errors_last_run": 0,
+  "status": "ok",
+  "fresh_buffers": 0,
+  "total_buffers": 2
+}

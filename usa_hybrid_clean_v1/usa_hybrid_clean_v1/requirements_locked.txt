@@ -1,0 +1,30 @@
+# requirements_locked.txt — USA_HYBRID_CLEAN_V1
+# Generado: 15 Enero 2026, 13:45 CDMX
+# Python: 3.12
+# ALINEADO: Runtime sklearn 1.7.2 para empatar con modelos (10 Nov 2025)
+
+# === CORE ML STACK (CRÍTICO) ===
+scikit-learn==1.7.2
+joblib==1.5.1
+numpy==2.1.3
+pandas==2.2.3
+
+# === GRADIENT BOOSTING ===
+xgboost==3.1.1
+catboost==1.2.8
+
+# === DATA ===
+yfinance==0.2.50
+requests==2.32.3
+beautifulsoup4==4.13.4
+
+# === UTILITIES ===
+python-telegram-bot==21.10
+python-dotenv==1.0.1
+pytz==2025.1
+
+# === INSTALACIÓN ===
+# pip install -r requirements_locked.txt
+
+# === VERIFICACIÓN ===
+# python verify_versions.py

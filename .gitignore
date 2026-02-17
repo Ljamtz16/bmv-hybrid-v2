@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.egg-info/
+.venv/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs and temp
+*.log
+*.tmp
+*.bak
+*.zip
+
+# Secrets and keys
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*credentials*.json
+token_gdrive.pickle
+
+# Data and artifacts
+data/
+runs/
+save/
+models/
+reports/
+logs/
+evidence/
+engine_runtime/
+**/*.parquet
+**/*.joblib
+**/*.pickle
+**/*.pkl
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Editor/OS
+.vscode/
+.DS_Store
+Thumbs.db

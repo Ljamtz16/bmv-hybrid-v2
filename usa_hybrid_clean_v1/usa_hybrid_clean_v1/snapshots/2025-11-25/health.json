@@ -1,0 +1,82 @@
+{
+  "date": "2025-11-25",
+  "timestamp": "2025-11-25T07:37:21.551343",
+  "metrics": {
+    "quality": {
+      "brier": null,
+      "ece": null
+    },
+    "coverage": {
+      "signals_count": 13,
+      "total_features": 10467,
+      "coverage_pct": 0.12419986624629788
+    },
+    "regime": {
+      "regime_distribution": {
+        "high_vol": 61.53846153846154,
+        "med_vol": 23.076923076923077,
+        "low_vol": 15.384615384615385
+      },
+      "regime_counts": {
+        "high_vol": 8,
+        "med_vol": 3,
+        "low_vol": 2
+      }
+    },
+    "concentration": {
+      "unique_tickers": 13,
+      "top5_concentration_pct": 38.46153846153847,
+      "top5_tickers": {
+        "AAPL": 1,
+        "IWM": 1,
+        "QQQ": 1,
+        "AMD": 1,
+        "AMZN": 1
+      }
+    },
+    "drift": {
+      "feature_drift": {
+        "ret_1d": 1.3798332915359497,
+        "vol_20d": 0.7240660383015286,
+        "atr_14d": 0.452356333522758,
+        "pos_in_range_20d": 0.4157163346891123
+      }
+    }
+  },
+  "alerts": [
+    {
+      "level": "info",
+      "message": "No targets available for quality metrics (forward-looking mode)"
+    },
+    {
+      "level": "warning",
+      "message": "Coverage 0.1% < 15% - Too restrictive gates"
+    },
+    {
+      "level": "warning",
+      "message": "Regime bias: high_vol represents 61.5% of signals"
+    },
+    {
+      "level": "warning",
+      "message": "Feature drift in ret_1d: PSI=1.380 > 0.2"
+    },
+    {
+      "level": "warning",
+      "message": "Feature drift in vol_20d: PSI=0.724 > 0.2"
+    },
+    {
+      "level": "warning",
+      "message": "Feature drift in atr_14d: PSI=0.452 > 0.2"
+    },
+    {
+      "level": "warning",
+      "message": "Feature drift in pos_in_range_20d: PSI=0.416 > 0.2"
+    }
+  ],
+  "summary": {
+    "total_alerts": 7,
+    "errors": 0,
+    "warnings": 6,
+    "status": "PASS"
+  }
+}
